@@ -10,6 +10,9 @@
 		7188B7E01A7EB8F0001D2F86 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 7188B7DF1A7EB8F0001D2F86 /* background.png */; };
 		7188B7E21A7EB95A001D2F86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7E11A7EB95A001D2F86 /* LoginViewController.swift */; };
 		7188B7E41A7EB964001D2F86 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7E31A7EB964001D2F86 /* RegisterViewController.swift */; };
+		7188B7E81A7EE54F001D2F86 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7E71A7EE54F001D2F86 /* FriendsViewController.swift */; };
+		7188B7EC1A7EEA8A001D2F86 /* SearchUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7EB1A7EEA8A001D2F86 /* SearchUsersViewController.swift */; };
+		7188B7EE1A7EF0DF001D2F86 /* SendFactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7ED1A7EF0DF001D2F86 /* SendFactionViewController.swift */; };
 		718EB0241A6EDB0D00DAB660 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718EB0231A6EDB0D00DAB660 /* AppDelegate.swift */; };
 		718EB0261A6EDB0D00DAB660 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718EB0251A6EDB0D00DAB660 /* ViewController.swift */; };
 		718EB0291A6EDB0D00DAB660 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 718EB0271A6EDB0D00DAB660 /* Main.storyboard */; };
@@ -32,6 +35,9 @@
 		7188B7DF1A7EB8F0001D2F86 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		7188B7E11A7EB95A001D2F86 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7188B7E31A7EB964001D2F86 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		7188B7E71A7EE54F001D2F86 /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendsViewController.swift; path = ../FriendsViewController.swift; sourceTree = "<group>"; };
+		7188B7EB1A7EEA8A001D2F86 /* SearchUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchUsersViewController.swift; path = ../SearchUsersViewController.swift; sourceTree = "<group>"; };
+		7188B7ED1A7EF0DF001D2F86 /* SendFactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFactionViewController.swift; sourceTree = "<group>"; };
 		718EB01E1A6EDB0D00DAB660 /* Faction.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Faction.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		718EB0221A6EDB0D00DAB660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		718EB0231A6EDB0D00DAB660 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,7 +93,10 @@
 				718EB0231A6EDB0D00DAB660 /* AppDelegate.swift */,
 				718EB0251A6EDB0D00DAB660 /* ViewController.swift */,
 				718EB0271A6EDB0D00DAB660 /* Main.storyboard */,
+				7188B7ED1A7EF0DF001D2F86 /* SendFactionViewController.swift */,
+				7188B7EB1A7EEA8A001D2F86 /* SearchUsersViewController.swift */,
 				7188B7E11A7EB95A001D2F86 /* LoginViewController.swift */,
+				7188B7E71A7EE54F001D2F86 /* FriendsViewController.swift */,
 				7188B7E31A7EB964001D2F86 /* RegisterViewController.swift */,
 				718EB02A1A6EDB0D00DAB660 /* Images.xcassets */,
 				718EB02C1A6EDB0D00DAB660 /* LaunchScreen.xib */,
@@ -223,9 +232,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7188B7E21A7EB95A001D2F86 /* LoginViewController.swift in Sources */,
+				7188B7EE1A7EF0DF001D2F86 /* SendFactionViewController.swift in Sources */,
+				7188B7E81A7EE54F001D2F86 /* FriendsViewController.swift in Sources */,
 				718EB0261A6EDB0D00DAB660 /* ViewController.swift in Sources */,
 				718EB0241A6EDB0D00DAB660 /* AppDelegate.swift in Sources */,
 				7188B7E41A7EB964001D2F86 /* RegisterViewController.swift in Sources */,
+				7188B7EC1A7EEA8A001D2F86 /* SearchUsersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,46 +36,35 @@ class RegisterViewController : UIViewController, UIActionSheetDelegate {
     }
     
     func registerUser(username: String, password: String, email: String) {
-//        var loginRef = myRef.childByAppendingPath("login")
-//        loginRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
-//            var snapDict = snapshot.value as Dictionary<String,String>
-//            var val = snapDict[username] as String?
-//            if(val == nil){ // we also need to validate if the username is valid (does not contain . # ..predefined fireabse shit
-//                println("username doesnt exists")
-//                
-//                self.authClient = FirebaseSimpleLogin(ref:self.myRef)
-//                self.authClient.createUserWithEmail(email, password: password,
-//                    andCompletionBlock: { error, user in
-//                        
-//                        if (error != nil) {
-//                            // There was an error creating the account
-//                            println(error)
-//                        }
-//                        else {
-//                            println("created user");
-//                            
-//                            var newLoginData = [username:String(user.uid)]
-//                            loginRef.updateChildValues(newLoginData)
-//                            println("account added to login Data")
-//                            
-//                            var userRef = self.myRef.childByAppendingPath("users")
-//                            var newUserData = [user.uid: ["email":email, "username": username]]
-//                            userRef.updateChildValues(newUserData)
-//                            println("account created in users")
-//                            var loginVC = self.navigationController?.viewControllers[0] as LoginViewController
-//                            loginVC.usernameTextField.text = username
-//                            self.navigationController?.popViewControllerAnimated(true)
-//                        }
-//                })
-//            }
-//            else{
-//                println("username already exists")
-//            }
-//            
-//            },
-//            withCancelBlock: { error in
-//                println(error.description)
-//        })
+        let loginPath = path + "/api/user/new"
+        let url = NSURL(string: loginPath)
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        
+        let myDict = ["email":email, "password":password, "username": username] as Dictionary<String, String>
+        let dataLogin: NSData = NSKeyedArchiver.archivedDataWithRootObject(myDict)
+        
+        
+        let task = NSURLSession.sharedSession().uploadTaskWithRequest(request, fromData: dataLogin) { data, response, error -> Void in
+            if((error) != nil){
+                println(error)
+            }
+            else{
+                //println(data)
+                //println(response)
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    println(httpResponse.statusCode)
+                    if(httpResponse.statusCode == 200){
+                        println("logging in...")
+                        //self.performSegueWithIdentifier("chat_login")
+                        println("logged in")
+                    }
+                } else {
+                    assertionFailure("unexpected response")
+                }
+            }
+        }
+        task.resume()
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
     }

@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+var path = "https://faction.notscott.me"
+
 class LoginViewController : UIViewController, UIActionSheetDelegate {
     
     @IBOutlet var btLogin: UIButton!
@@ -39,52 +41,63 @@ class LoginViewController : UIViewController, UIActionSheetDelegate {
     
     func authUser(username:String, password:String) {
         
-//        authClient = FirebaseSimpleLogin(ref:myRef)
-//        authClient.loginWithEmail(username, andPassword: password,
-//            withCompletionBlock: { error, user in
-//                
-//                if (error != nil) {
-//                    
-//                    var loginRef = self.myRef.childByAppendingPath("login")
-//                    loginRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
-//                        var snapDict = snapshot.value as Dictionary<String,String>
-//                        var val = snapDict[username] as String?
-//                        if(val != nil){
-//                            var userEmailRef = self.myRef.childByAppendingPath("users").childByAppendingPath(val! as String).childByAppendingPath("email")
-//                            userEmailRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
-//                                self.authClient.loginWithEmail(snapshot.value as String, andPassword: password,
-//                                    withCompletionBlock: { error, user in
-//                                        if( error != nil){
-//                                            println(error)
-//                                        }
-//                                        else{
-//                                            println("logging in...")
-//                                            self.performSegueWithIdentifier("chat_login", sender: user)
-//                                            println("logged in")
-//                                        }
-//                                })
-//                            })
-//                            
-//                        }
-//                        else{
-//                            println("error::")
-//                            println(error)
-//                        }
-//                    })
-//                }
-//                else {
-//                    
-//                    println("logging in...")
-//                    self.performSegueWithIdentifier("chat_login", sender: user)
-//                    println("logged in")
-//                }
+        let loginPath = path + "/api/user/login"
+        let url = NSURL(string: loginPath)
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        
+        let myDict = ["email":username, "password":password] as Dictionary<String, String>
+        let dataLogin: NSData = NSKeyedArchiver.archivedDataWithRootObject(myDict)
+
+        
+        let task = NSURLSession.sharedSession().uploadTaskWithRequest(request, fromData: dataLogin) { data, response, error -> Void in
+            if((error) != nil){
+                println(error)
+            }
+            else{
+            
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    println(httpResponse.statusCode)
+                    if(httpResponse.statusCode == 200){
+                        println("logging in...")
+                        //self.performSegueWithIdentifier("chat_login")
+                        println("logged in")
+                    }
+                } else {
+                    assertionFailure("unexpected response")
+                }
+            }
+        }
+        
+//        let task = NSURLConnection.sendAsynchronousRequest(request, fromData: dataLogin, completionHandler: { data, response, error -> Void in
+//            
+//            println("JSON recieved")
+//
+//            if((error) != nil)
+//            {
+//                println(error.localizedDescription)
+//            }
+//            
+//            println("Parsing JSON")
+//            var err: NSError?
+//            var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
+//            
+//            if(err != nil)
+//            {
+//                println("Json error");
+//            }
+//            println("Building Array result list from JSON")
+//            
+//            println(jsonResult["results"])
+//            //var results = jsonResult["results"] as NSArray
+//            //self.delegate?.didReceiveAPIResult(jsonResult)
+//            
+//            println("Done with JSON response")
+//            
 //        })
+        task.resume()
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        
-        if(segue.identifier == "chat_login"){
-
-        }
         
     }
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
