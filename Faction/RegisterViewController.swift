@@ -18,6 +18,7 @@ class RegisterViewController : UIViewController, UIActionSheetDelegate {
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     
+    @IBOutlet var confirmPasswordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,12 @@ class RegisterViewController : UIViewController, UIActionSheetDelegate {
     
     @IBAction func register(sender: UIButton) {
         if(usernameTextField.text != "" && passwordTextField.text != "" && emailTextField.text != ""){
-            self.registerUser(usernameTextField.text, password: passwordTextField.text, email:emailTextField.text)
+            if(passwordTextField.text == confirmPasswordTextField.text){
+                self.registerUser(usernameTextField.text, password: passwordTextField.text, email:emailTextField.text)
+            }
+            else{
+                println("Passwords do not match")
+            }
         }
     }
     
@@ -50,8 +56,8 @@ class RegisterViewController : UIViewController, UIActionSheetDelegate {
                 println(error)
             }
             else{
-                //println(data)
-                //println(response)
+                println(data)
+                println(response)
                 if let httpResponse = response as? NSHTTPURLResponse {
                     println(httpResponse.statusCode)
                     if(httpResponse.statusCode == 200){

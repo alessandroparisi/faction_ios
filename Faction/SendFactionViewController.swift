@@ -21,14 +21,17 @@ class SendFactionViewController: UIViewController, UITextViewDelegate {
 //    return shouldChange
 //    }
 
-    func textView(textField: UITextView!, shouldChangeCharactersInRange range: NSRange, replacementString string: String!) -> Bool {
+    @IBOutlet var textView: UITextView!
+    @IBAction func sendFaction(sender: AnyObject) {
         
+    func textViewShouldEndEditing(textField: UITextView!) -> Bool {
+        
+        println("hello")
         return false
         
     }
     
-    @IBOutlet var textView: UITextView!
-    @IBAction func sendFaction(sender: AnyObject) {
+
     
     }
 }
