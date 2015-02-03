@@ -36,19 +36,7 @@ class RequestDealer {
                     println(httpResponse.statusCode)
                     if(httpResponse.statusCode == 200){
                         if let vc = myVC {
-//                            let story = vc.storyboard!
-//                            let mainVC : UITabBarController = story.instantiateViewControllerWithIdentifier("tabVC") as UITabBarController
-//                            
-//                            vc.navigationController!.view.removeFromSuperview()
-//                            
-//                            
-//                            
-//                            if vc.restorationIdentifier == "registerVC" {
-//                                nav.popViewControllerAnimated(false)
-//                            }
-//                            
-//                            nav.pushViewController(mainVC, animated: false)
-
+                            vc.navigationController!.dismissViewControllerAnimated(true, completion: nil)
                             println("logged in")
                         }
                         else{
