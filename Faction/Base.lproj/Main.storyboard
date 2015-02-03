@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gSk-yG-FqU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Dk7-NQ-YtQ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -8,7 +8,7 @@
         <!--Register-->
         <scene sceneID="B4p-ft-OeG">
             <objects>
-                <viewController id="51L-J8-Y6O" customClass="RegisterViewController" customModule="Faction" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="registerVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="51L-J8-Y6O" customClass="RegisterViewController" customModule="Faction" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xgH-VU-aXr"/>
                         <viewControllerLayoutGuide type="bottom" id="MgP-pX-cZY"/>
@@ -133,12 +133,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ejv-6D-G61" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2618" y="405"/>
+            <point key="canvasLocation" x="2772" y="395"/>
         </scene>
         <!--Login-->
         <scene sceneID="wLf-yF-DAc">
             <objects>
-                <viewController id="u79-g4-c61" customClass="LoginViewController" customModule="Faction" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="u79-g4-c61" customClass="LoginViewController" customModule="Faction" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LwK-pJ-7iS"/>
                         <viewControllerLayoutGuide type="bottom" id="teu-qY-EtE"/>
@@ -276,23 +276,23 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="ncs-Ys-4Qq"/>
                                 <exclude reference="Jra-6h-Sba"/>
-                                <exclude reference="mUD-mJ-5sk"/>
+                                <exclude reference="ncs-Ys-4Qq"/>
                                 <exclude reference="7rC-9l-O0R"/>
-                                <exclude reference="IUA-61-e58"/>
-                                <exclude reference="esr-73-R33"/>
-                                <exclude reference="Zuf-27-OhC"/>
-                                <exclude reference="DWi-Mh-Ofr"/>
+                                <exclude reference="mUD-mJ-5sk"/>
                                 <exclude reference="7c4-Z3-8SB"/>
+                                <exclude reference="DWi-Mh-Ofr"/>
+                                <exclude reference="IUA-61-e58"/>
+                                <exclude reference="Zuf-27-OhC"/>
                                 <exclude reference="eVi-Z2-cmF"/>
-                                <exclude reference="XGd-Ga-uj0"/>
-                                <exclude reference="SQE-fa-KMN"/>
-                                <exclude reference="MKb-cZ-0Pc"/>
+                                <exclude reference="esr-73-R33"/>
                                 <exclude reference="2N4-ft-GUK"/>
+                                <exclude reference="MKb-cZ-0Pc"/>
+                                <exclude reference="SQE-fa-KMN"/>
+                                <exclude reference="XGd-Ga-uj0"/>
+                                <exclude reference="3qP-yD-qvz"/>
                                 <exclude reference="EEL-q3-F2s"/>
                                 <exclude reference="yGf-eR-an6"/>
-                                <exclude reference="3qP-yD-qvz"/>
                             </mask>
                         </variation>
                     </view>
@@ -307,12 +307,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mGb-3i-eQ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1815" y="405"/>
+            <point key="canvasLocation" x="1969" y="395"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NqL-g4-is1">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gSk-yG-FqU" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="authNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gSk-yG-FqU" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JAQ-ZG-N0X">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -325,7 +325,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ow6-MK-dXQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1076" y="405"/>
+            <point key="canvasLocation" x="1230" y="395"/>
         </scene>
         <!--Friends-->
         <scene sceneID="Uhv-3W-obF">
@@ -485,7 +485,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AVf-ZO-De1">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AVf-ZO-De1">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -510,6 +510,14 @@
                             <constraint firstItem="AVf-ZO-De1" firstAttribute="bottom" secondItem="JXe-8d-2Vz" secondAttribute="top" id="OeB-mw-Ds7"/>
                             <constraint firstItem="AVf-ZO-De1" firstAttribute="top" secondItem="uvM-uv-5BK" secondAttribute="bottom" id="YZa-3d-ufk"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DZU-ce-rgN"/>
+                                <exclude reference="Jle-NT-yiA"/>
+                                <exclude reference="OeB-mw-Ds7"/>
+                                <exclude reference="YZa-3d-ufk"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="AVf-ZO-De1" id="ekR-uR-tPr"/>
@@ -590,7 +598,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="ZtL-J0-yDv">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Dk7-NQ-YtQ" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabVC" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dk7-NQ-YtQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="6cX-Qi-hHa">
@@ -607,7 +615,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CwQ-tI-Ag0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3846" y="536"/>
+            <point key="canvasLocation" x="3678" y="406"/>
         </scene>
         <!--Change Password-->
         <scene sceneID="a0B-7J-Sf9">
@@ -749,11 +757,11 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="4gV-Jm-Yuw"/>
-                                <exclude reference="xkJ-gc-a11"/>
                                 <exclude reference="e9A-hk-Ki8"/>
                                 <exclude reference="pMf-Qp-QWZ"/>
                                 <exclude reference="vBF-At-ptg"/>
+                                <exclude reference="4gV-Jm-Yuw"/>
+                                <exclude reference="xkJ-gc-a11"/>
                                 <exclude reference="Lud-tH-5M2"/>
                                 <exclude reference="kxH-ke-Pmj"/>
                                 <exclude reference="8rQ-5n-mIh"/>
@@ -772,8 +780,9 @@
         <!--Navigation Controller-->
         <scene sceneID="mGL-mt-02K">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eOi-Hj-Dk1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cHD-Ye-Rr8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="asD-k7-I4F"/>
+                    <tabBarItem key="tabBarItem" systemItem="recents" id="asD-k7-I4F"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="U3s-RH-IfV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -784,15 +793,15 @@
                         <segue destination="O04-xG-V0k" kind="relationship" relationship="rootViewController" id="1u5-iC-HzB"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eOi-Hj-Dk1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1530" y="1492"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QNC-t9-qqQ">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l0N-5V-2Fg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yhz-nf-bU6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="recents" id="TTI-1G-4Qh"/>
+                    <tabBarItem key="tabBarItem" systemItem="topRated" id="TTI-1G-4Qh"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="d32-9y-wgw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -803,13 +812,13 @@
                         <segue destination="IB7-sw-H09" kind="relationship" relationship="rootViewController" id="81a-YY-AfW"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="l0N-5V-2Fg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5374" y="1462"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="C7t-vM-7o5">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tTp-nM-IuK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WCz-C4-4vQ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="jMx-Hb-opG"/>
                     <toolbarItems/>
@@ -822,13 +831,13 @@
                         <segue destination="ueZ-ZU-xGa" kind="relationship" relationship="rootViewController" id="3Xx-v7-LAH"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tTp-nM-IuK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4574" y="-270"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="seO-Hy-cFs">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ixk-tU-wx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UcL-GM-BXy" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="search" id="2ot-uB-ZzH"/>
                     <toolbarItems/>
@@ -841,13 +850,13 @@
                         <segue destination="YHc-Z2-wNk" kind="relationship" relationship="rootViewController" id="NaU-tu-mFm"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ixk-tU-wx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4574" y="395"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tQF-gT-PQU">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4gI-pK-YTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oa7-Lw-SLY" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="more" id="J3G-ZM-bWD"/>
                     <toolbarItems/>
@@ -860,7 +869,6 @@
                         <segue destination="2LH-1X-tBJ" kind="relationship" relationship="rootViewController" id="vbN-36-JNu"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4gI-pK-YTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3851" y="1462"/>
         </scene>

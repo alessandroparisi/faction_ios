@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		716021F01A7FF5140061DF68 /* RequestDealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716021EF1A7FF5140061DF68 /* RequestDealer.swift */; };
 		7188B7E01A7EB8F0001D2F86 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 7188B7DF1A7EB8F0001D2F86 /* background.png */; };
 		7188B7E21A7EB95A001D2F86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7E11A7EB95A001D2F86 /* LoginViewController.swift */; };
 		7188B7E41A7EB964001D2F86 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7E31A7EB964001D2F86 /* RegisterViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		716021EF1A7FF5140061DF68 /* RequestDealer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDealer.swift; sourceTree = "<group>"; };
 		7188B7DF1A7EB8F0001D2F86 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		7188B7E11A7EB95A001D2F86 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7188B7E31A7EB964001D2F86 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				718EB0231A6EDB0D00DAB660 /* AppDelegate.swift */,
+				716021EF1A7FF5140061DF68 /* RequestDealer.swift */,
 				7188B82B1A7F0689001D2F86 /* Images */,
 				7188B82A1A7F0674001D2F86 /* Find Friends */,
 				7188B8291A7F066D001D2F86 /* Friends and Requests */,
@@ -306,6 +309,7 @@
 				7188B7F01A7EFB0C001D2F86 /* SettingsViewController.swift in Sources */,
 				7188B7F21A7EFB1E001D2F86 /* ReceivedFactionsViewController.swift in Sources */,
 				7188B8241A7F037B001D2F86 /* ChooseFriendsViewController.swift in Sources */,
+				716021F01A7FF5140061DF68 /* RequestDealer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
