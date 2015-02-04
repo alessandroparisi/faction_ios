@@ -49,7 +49,15 @@ class RequestDealer {
                             println("logout successful")
                         }
                     }
-                } else {
+                        //leo
+                    else if(httpResponse.statusCode == 201){
+                        println("Congratumylations you have added a friend")
+                    }
+                    else if(httpResponse.statusCode == 404){
+                        println("Shit doesn't work, help ale")
+                    }
+                }
+                else {
                     println("failed")
                     assertionFailure("unexpected response")
                 }
@@ -57,6 +65,7 @@ class RequestDealer {
         }
         task.resume()
     }
+    
     class func logout(){
         var emptyDic = Dictionary<String, String>()
 
@@ -66,4 +75,14 @@ class RequestDealer {
         var params = ["old":oldPass, "new":newPass]
         self.auth(params, path: path + "/api/user/update-password", myVC:nil, method:"PUT")
     }
+    
+    class func addFriend(friend:String){
+        var params = ["username":friend]
+        self.auth(params, path: path + "/api/user/request-friend", myVC:nil, method:"POST")
+    }
+    
+    
+    
+    
+    
 }

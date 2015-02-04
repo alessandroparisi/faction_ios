@@ -24,6 +24,7 @@
 		718EB02E1A6EDB0D00DAB660 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 718EB02C1A6EDB0D00DAB660 /* LaunchScreen.xib */; };
 		718EB03A1A6EDB0D00DAB660 /* FactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718EB0391A6EDB0D00DAB660 /* FactionTests.swift */; };
 		7198EE631A8145860005F7F2 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7198EE621A8145860005F7F2 /* MainTabBarController.swift */; };
+		B3812A2B1A8202A50087DE52 /* Friends.png in Resources */ = {isa = PBXBuildFile; fileRef = B3812A2A1A8202A50087DE52 /* Friends.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		718EB0381A6EDB0D00DAB660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		718EB0391A6EDB0D00DAB660 /* FactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactionTests.swift; sourceTree = "<group>"; };
 		7198EE621A8145860005F7F2 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = ../MainTabBarController.swift; sourceTree = "<group>"; };
+		B3812A2A1A8202A50087DE52 /* Friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Friends.png; path = ../../../Desktop/Icons/Friends.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 		718EB0201A6EDB0D00DAB660 /* Faction */ = {
 			isa = PBXGroup;
 			children = (
+				B3812A2A1A8202A50087DE52 /* Friends.png */,
 				718EB0231A6EDB0D00DAB660 /* AppDelegate.swift */,
 				716021EF1A7FF5140061DF68 /* RequestDealer.swift */,
 				7188B82B1A7F0689001D2F86 /* Images */,
@@ -283,6 +286,7 @@
 			files = (
 				718EB0291A6EDB0D00DAB660 /* Main.storyboard in Resources */,
 				7188B7E01A7EB8F0001D2F86 /* background.png in Resources */,
+				B3812A2B1A8202A50087DE52 /* Friends.png in Resources */,
 				718EB02E1A6EDB0D00DAB660 /* LaunchScreen.xib in Resources */,
 				718EB02B1A6EDB0D00DAB660 /* Images.xcassets in Resources */,
 			);
