@@ -60,6 +60,7 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     }
     func getUsers() -> Void {
         //TODO get all users
+        
     }
     
 }

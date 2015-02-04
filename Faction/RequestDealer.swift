@@ -12,16 +12,15 @@ import UIKit
 class RequestDealer {
     
     
-    class func auth(params: Dictionary<String,String>, path: String, myVC: UIViewController?) {
+    class func auth(params: Dictionary<String,String>, path: String, myVC: UIViewController?, method:String) {
         var err: NSError?
         
         let url = NSURL(string: path)
         let request = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "POST"
+        request.HTTPMethod = method
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
        
-        println("logging in...")
 
         request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
         
@@ -39,6 +38,9 @@ class RequestDealer {
                             vc.navigationController!.dismissViewControllerAnimated(true, completion: nil)
                             println("logged in")
                         }
+                        else if (method == "PUT"){
+                            println("password changed successfully")
+                        }
                         else{
                             println("logout successful")
                         }
@@ -54,6 +56,10 @@ class RequestDealer {
     class func logout(){
         var emptyDic = Dictionary<String, String>()
 
-        self.auth(emptyDic, path: path + "/api/user/logout", myVC: nil)
+        self.auth(emptyDic, path: path + "/api/user/logout", myVC: nil, method: "POST")
+    }
+    class func changePassword(oldPass:String, newPass:String){
+        var params = ["old":oldPass, "new":newPass]
+        self.auth(params, path: path + "/api/user/update-password", myVC:nil, method:"PUT")
     }
 }

@@ -31,6 +31,7 @@ class LoginViewController : UIViewController, UIActionSheetDelegate {
     
     @IBAction func login(sender: UIButton) {
         if(usernameTextField.text != "" && passwordTextField.text != ""){
+            println("logging in...")
             self.authUser(usernameTextField.text, password:passwordTextField.text)
             //RequestDealer.logout()
         }
@@ -47,7 +48,7 @@ class LoginViewController : UIViewController, UIActionSheetDelegate {
         
         let params = ["identifier":username, "password": password] as Dictionary<String, String>
 
-        RequestDealer.auth(params, path: path + "/api/user/login", myVC: self)
+        RequestDealer.auth(params, path: path + "/api/user/login", myVC: self, method:"POST")
         
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {

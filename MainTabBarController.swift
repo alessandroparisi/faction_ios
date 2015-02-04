@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-var firstTime = true
+var notLoggedIn = true
 
 class MainTabBarController : UITabBarController {
     override func viewDidAppear(animated: Bool) {
         
-        if firstTime {
+        if notLoggedIn {
             let storyboard = self.storyboard!
             let authVC = storyboard.instantiateViewControllerWithIdentifier("authNav") as UINavigationController
             self.presentViewController(authVC, animated: false, completion: nil)
-            firstTime = false
+            notLoggedIn = false
         }
         //RequestDealer.logout()
     }

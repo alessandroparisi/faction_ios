@@ -11,4 +11,23 @@ import UIKit
 
 class SettingsViewController : UIViewController{
 
+    @IBOutlet var currentPass: UITextField!
+    @IBOutlet var newPass: UITextField!
+    @IBOutlet var confirmNewPass: UITextField!
+    
+    @IBAction func changePassword(sender: AnyObject) {
+        println("attemption change password")
+        if(newPass.text != "" && currentPass.text != ""){
+            if(newPass.text == confirmNewPass.text){
+                RequestDealer.changePassword(currentPass.text, newPass: newPass.text)
+            }
+            else{
+                println("passwords do not match")
+            }
+        }
+        else{
+            println("empty fields")
+        }
+    }
+    
 }

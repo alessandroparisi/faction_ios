@@ -45,7 +45,9 @@ class RegisterViewController : UIViewController, UIActionSheetDelegate {
         
         let params = ["action":"register", "email":email, "password":password, "username": username] as Dictionary<String, String>
         
-        RequestDealer.auth(params, path: path + "/api/user/new", myVC: self)
+        println("logging in...")
+        
+        RequestDealer.auth(params, path: path + "/api/user/new", myVC: self, method:"POST")
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
     }
