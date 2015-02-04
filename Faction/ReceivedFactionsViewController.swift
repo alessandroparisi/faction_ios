@@ -57,7 +57,22 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
         
     }
     func getFactions() -> Void {
-        
+        println("a")
+        let url = NSURL(string: path + "/api/update")
+        let session = NSURLSession.sharedSession()
+        let dataTask = session.dataTaskWithURL(url!, completionHandler: { (data: NSData!, response:NSURLResponse!,
+            error: NSError!) -> Void in
+            println("ok")
+            println(response)
+            println(error)
+            println(data)
+            var err: NSError?
+            let jsonDict = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as NSDictionary
+            println(jsonDict)
+
+            self.factions = jsonDict["factions"] as Array
+            println(self.factions)
+        })
     }
     
 }

@@ -35,8 +35,12 @@ class RequestDealer {
                     println(httpResponse.statusCode)
                     if(httpResponse.statusCode == 200){
                         if let vc = myVC {
+                            let defaults = NSUserDefaults.standardUserDefaults()
+                            defaults.setObject("hahaha", forKey: "id")
+                            
                             vc.navigationController!.dismissViewControllerAnimated(true, completion: nil)
                             println("logged in")
+                            
                         }
                         else if (method == "PUT"){
                             println("password changed successfully")
