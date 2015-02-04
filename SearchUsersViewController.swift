@@ -7,21 +7,20 @@
 //
 
 import Foundation
-
-import Foundation
 import UIKit
 
 class SearchUsersViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     
-    var users = [String]()
-    
+    var users: Array<String> = []
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         getUsers()
+        tableView.reloadData()
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -31,7 +30,6 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     
     // MARK: - Table View
@@ -46,7 +44,10 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
-        
+        println("alealealeale")
+        let x = self.users[indexPath.row] as String
+        print(x)
+        cell.textLabel?.text = self.users[indexPath.row] as String
         return cell
     }
     
@@ -56,10 +57,32 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //TODO Send friend request
+        
+        println("Adding user at row \(indexPath.row) with name \(users[indexPath.row])")
+        RequestDealer.addFriend(users[indexPath.row])
+
+        //var image : UIImage = UIImage(named: "osx_design_view_messages")!
+        //cell.imageView.image = image
+        
+        
+        
+        
     }
     func getUsers() -> Void {
-        //TODO get all users
+        var err: NSError?
+        
+        let url = NSURL(string: "https://faction.notscott.me/api/user/search")
+     
+        
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+            self.users =  NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as Array<String>
+            println(self.users)
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
+        }
+        
+        task.resume()
+
         
     }
     

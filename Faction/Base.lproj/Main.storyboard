@@ -380,6 +380,20 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XTt-wy-NJg">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="g18-C4-Blb">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g18-C4-Blb" id="QCv-gn-Bd7">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nY6-c2-OTJ">
+                                                    <rect key="frame" x="192" y="0.0" width="400" height="43"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="YHc-Z2-wNk" id="ogV-7F-4au"/>
                                     <outlet property="delegate" destination="YHc-Z2-wNk" id="D75-HW-yam"/>
@@ -388,10 +402,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="XTt-wy-NJg" firstAttribute="top" secondItem="lCQ-zn-dQv" secondAttribute="top" id="585-ST-Pnv"/>
-                            <constraint firstAttribute="trailing" secondItem="XTt-wy-NJg" secondAttribute="trailing" id="D3l-yi-Rq6"/>
-                            <constraint firstItem="XTt-wy-NJg" firstAttribute="leading" secondItem="lCQ-zn-dQv" secondAttribute="leading" id="UYH-Jj-33v"/>
-                            <constraint firstItem="XTt-wy-NJg" firstAttribute="bottom" secondItem="4RS-PA-Ki6" secondAttribute="top" id="wmH-NW-yPo"/>
+                            <constraint firstItem="XTt-wy-NJg" firstAttribute="bottom" secondItem="4RS-PA-Ki6" secondAttribute="top" id="086-kk-7A7"/>
+                            <constraint firstItem="XTt-wy-NJg" firstAttribute="top" secondItem="lCQ-zn-dQv" secondAttribute="top" id="K2U-LN-UkZ"/>
+                            <constraint firstItem="XTt-wy-NJg" firstAttribute="leading" secondItem="lCQ-zn-dQv" secondAttribute="leading" id="PxU-68-DDu"/>
+                            <constraint firstAttribute="trailing" secondItem="XTt-wy-NJg" secondAttribute="trailing" id="eIi-cG-LcI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Find Friends" id="ufk-sD-TLJ"/>
@@ -401,7 +415,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SjW-aB-PSi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5386" y="395"/>
+            <point key="canvasLocation" x="5386" y="394"/>
         </scene>
         <!--Send Faction-->
         <scene sceneID="wnt-2S-t7i">
