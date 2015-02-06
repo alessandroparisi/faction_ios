@@ -93,6 +93,7 @@ class RequestDealer {
         }
         task.resume()
     }
+ 
     class func login(username:String, password:String, vc:UIViewController){
         let params = ["identifier":username, "password": password] as Dictionary<String, String>
         RequestDealer.auth(params, path: path + "/api/user/login", myVC: vc, method:"POST", action:"login")
@@ -103,7 +104,6 @@ class RequestDealer {
     }
     class func logout(){
         var emptyDic = Dictionary<String, String>()
-
         self.auth(emptyDic, path: path + "/api/user/logout", myVC: nil, method: "POST", action:"logout")
     }
     class func changePassword(oldPass:String, newPass:String){
@@ -153,6 +153,53 @@ class RequestDealer {
         if !managedContext.save(&error) {
             println("Could not save \(error), \(error?.userInfo)")
         }
+    }
+    
+    
+    
+    
+    
+    
+    class func aleHasAShittyAuth(params: Dictionary<String,AnyObject?>, path: String, myVC: UIViewController?, method:String) {
+        var err: NSError?
+        
+        let url = NSURL(string: path)
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = method
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        let l = params as Dictionary<String, AnyObject>
+        
+        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(l, options: nil, error: &err)
+        
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error -> Void in
+            if((error) != nil){
+                println(error)
+            }
+            else{
+                println(response)
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    println(httpResponse.statusCode)
+                    if(httpResponse.statusCode == 201){
+                        println("Success, Faction sent")
+                    }
+                    else if(httpResponse.statusCode == 400){
+                        println("Failure, Error.. something not present")
+                    }
+                    else{
+                        println("Failure, Error.. something went terribly wrong")
+                        
+                    }
+                }
+                else {
+                    println("failed")
+                    assertionFailure("unexpected response")
+                }
+            }
+        }
+        task.resume()
     }
 
     

@@ -11,9 +11,19 @@ import UIKit
 
 
 class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+  
     @IBOutlet var tableView: UITableView!
     
     var friends = [String]()
+    var selectedFriends = [Int: String]()
+    var factionText : String?
+    var faction : String = ""
+    
+  
+    @IBOutlet weak var sendFaction: UIButton!
+
+    //var selectedFriends = as Dictionary<String, String>
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,6 +31,7 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         getFriends()
+        tableView.reloadData()
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -46,6 +57,10 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
         
+        let specificFriend = self.friends[indexPath.row] as String
+        print(specificFriend)
+        cell.textLabel?.text = self.friends[indexPath.row] as String
+        
         return cell
     }
     
@@ -55,9 +70,86 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+
+        println("Sending Faction to user at row \(indexPath.row) with name \(friends[indexPath.row])")
+        var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         
+        var selected = isSelected(indexPath.row)
+        
+        if selected {
+            selectedFriends.removeValueForKey(indexPath.row)
+            selectedCell.contentView.backgroundColor = UIColor.whiteColor()
+        }
+        else{
+            selectedFriends[indexPath.row] = friends[indexPath.row]
+            selectedCell.contentView.backgroundColor = UIColor.greenColor()
+            
+            //selectedFriends.updateValue(friends[indexPath.row], forKey: indexPath.row)
+        }
+        println(selectedFriends)
+        //RequestDealer.addFriend(friends[indexPath.row])
     }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        var cellToDeSelect:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        
+        var selected = isSelected(indexPath.row)
+        if selected {
+            selectedFriends[indexPath.row] = friends[indexPath.row]
+            cellToDeSelect.contentView.backgroundColor = UIColor.greenColor()
+        }
+        else{
+            selectedFriends.removeValueForKey(indexPath.row)
+            cellToDeSelect.contentView.backgroundColor = UIColor.whiteColor()
+            
+            //selectedFriends.updateValue(friends[indexPath.row], forKey: indexPath.row)
+        }
+        
+        //cellToDeSelect.contentView.backgroundColor = UIColor.greenColor()
+    }
+    
+    // checks if row was already selected
+    func isSelected(row: Int) -> Bool {
+        for selectedRow in selectedFriends.keys {
+            if selectedRow == row{
+                return true
+            }
+        }
+        return false
+    }
+    
+    @IBAction func sendFaction(sender: UIButton) {
+        // maybe need to clear array? dunno how this works
+        
+        var x = [String]()
+        for (row, user) in selectedFriends {
+            x.append(user)
+        }
+        println("Send button was pressed*********************************")
+        println(x)
+        println(factionText!)
+        println(faction)
+        
+        let params = ["to":x,"faction":factionText!,"fact":faction] as Dictionary<String, AnyObject?>
+        RequestDealer.aleHasAShittyAuth(params, path: path + "/api/factions/send", myVC: self, method:"POST")
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
     func getFriends() -> Void {
+        // Placeholder code until they fix the fucking backend
         
+        var err: NSError?
+        
+        let url = NSURL(string: "https://faction.notscott.me/api/user/search")
+        
+        
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+            self.friends =  NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as Array<String>
+            println(self.friends)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
+        }
+        
+        task.resume()
     }
+
 }

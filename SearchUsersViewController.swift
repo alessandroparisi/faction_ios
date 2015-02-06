@@ -63,9 +63,6 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
         //var image : UIImage = UIImage(named: "osx_design_view_messages")!
         //cell.imageView.image = image
         
-        
-        
-        
     }
     func getUsers() -> Void {
         var err: NSError?
