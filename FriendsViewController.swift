@@ -18,8 +18,8 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.updateDB()
-
+    }
+    override func viewDidAppear(animated: Bool) {
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -42,14 +42,14 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(section){
         case 0:
-            if let s = sh?.pendingFriends? {
+            if let s = sh?.pendingFriends {
                 return s.count
             }
             else{
                 return 0
             }
         case 1:
-            if let q = sh?.friends? {
+            if let q = sh?.friends {
                 return q.count
             }
             else {
@@ -72,8 +72,8 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
         
         if(indexPath.section == 0){
             let cell = self.tableView.dequeueReusableCellWithIdentifier("PotentialFriend") as PotentialFriendCell
-            if let f = sh?.pendingFriends?{
-                let s = f[indexPath.row]
+            if let f = sh?{
+                let s = f.pendingFriends[indexPath.row]
                 cell.textLabel?.text = s.valueForKey("username") as? String
             }
             cell.accept.tag = indexPath.row
@@ -82,8 +82,8 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
         }
         else{
             let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
-            if let f = sh?.friends? {
-                let s = f[indexPath.row]
+            if let f = sh? {
+                let s = f.friends[indexPath.row]
                 cell.textLabel?.text = s.valueForKey("username") as? String
             }
             cell.selectionStyle = .None
@@ -102,17 +102,17 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
         
     }
     @IBAction func acceptFriend(sender: AnyObject) {
-        if let user = sh?.pendingFriends? {
-            let username = user[sender.tag]
-            removePendingFriend(username)
+        if let user = sh?{
+            let username = user.pendingFriends[sender.tag]
             RequestDealer.acceptedFriendRequest(username.valueForKey("username") as String, accepted: "true", vc:self)
+            removePendingFriend(username)
         }
     }
     @IBAction func declineFriend(sender: AnyObject) {
-        if let user = sh?.pendingFriends? {
-            let username = user[sender.tag]
-            removePendingFriend(username)
+        if let user = sh? {
+            let username = user.pendingFriends[sender.tag]
             RequestDealer.acceptedFriendRequest(username.valueForKey("username") as String, accepted: "false", vc:self)
+            removePendingFriend(username)
         }
     }
     func removePendingFriend(username:NSManagedObject){
@@ -121,88 +121,5 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
         managedContext.deleteObject(username)
         managedContext.save(nil)
     }
-    func updateDB(){
-        var err: NSError?
-        
-        let url = NSURL(string: path + "/api/update")
-        
-        
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            println(response)
-            if(error != nil){
-                println(error)
-            }
-            println("-------------------------------------------")
-            println("-------------------------------------------")
-            if let info = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String, Array<String>>{
-                println(info)
-                if let pending_requests = info["pending_requests"]{
-                    self.addPendingRequests(pending_requests)
-                }
-            }
-        }
-        
-        task.resume()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
-    }
-    func addPendingRequests(pending_requests:[String]){
-        
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
-        let entity =  NSEntityDescription.entityForName("ReceivedRequestFriends", inManagedObjectContext: managedContext)
-        loadData()
-        
-        var already_exists = false
-        
-        if let fr = sh?.pendingFriends {
-            for req in pending_requests {
-                for u in fr {
-                    if u == req {
-                        already_exists = true
-                    }
-                }
-                if(!already_exists){
-                    let friend =  NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
-                    friend.setValue(req, forKey: "username")
-                    var error: NSError?
-                    if !managedContext.save(&error) {
-                        println("Could not save \(error), \(error?.userInfo)")
-                    }
-                }
-                already_exists = false
-            }
-        }
-    }
-    func loadData(){
-        let appDel = UIApplication.sharedApplication().delegate as AppDelegate
-        let managedContext = appDel.managedObjectContext!
-        loadFriends(managedContext, entityName:"Friends")
-        loadFriends(managedContext, entityName:"ReceivedRequestFriends")
-    }
-    func loadFriends(managedContext: NSManagedObjectContext, entityName: String){
-        let fetchRequest = NSFetchRequest(entityName: entityName)
-        
-        var error:NSError?
-        
-        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as [NSManagedObject]?
-        
-        if let results = fetchedResults {
-            if entityName == "Friends"{
-                sh?.friends = results
-            }
-            else{
-                sh?.pendingFriends = results
-            }
-//            for r in results {
-//                managedContext.deleteObject(r)
-//            }
-        }
 
-        else{
-            println("Could not fetch \(entityName): \(error), \(error!.userInfo)")
-        }
-        //managedContext.save(nil)
-
-    }
 }

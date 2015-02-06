@@ -11,10 +11,11 @@ import CoreData
 
 class SessionHelper {
     var username: String?
-    var friends: [NSManagedObject]?
-    var pendingFriends: [NSManagedObject]?
+    var friends: [NSManagedObject]
+    var pendingFriends: [NSManagedObject]
     
     init(){
-
+        self.friends = [NSManagedObject]()
+        self.pendingFriends = [NSManagedObject]()
     }
 }

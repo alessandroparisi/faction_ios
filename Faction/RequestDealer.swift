@@ -21,16 +21,21 @@ class RequestDealer {
         request.HTTPMethod = method
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-       
+        
+        if method != "register" && method != "login" {
+            if let l = KeychainManager.stringForKey("id"){
+                request.addValue("sails.sid=\(l)", forHTTPHeaderField:"Cookie")
+            }
+        }
 
         request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
-        
+
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error -> Void in
             if((error) != nil){
                 println(error)
             }
             else{
-                println(response)
+                //println(response)
                 if let httpResponse = response as? NSHTTPURLResponse {
                     println(httpResponse.statusCode)
                     if(httpResponse.statusCode == 200){
@@ -38,15 +43,29 @@ class RequestDealer {
                         switch action {
                         case "login", "register":
                             if let vc = myVC {
+                                
+                                var userDefaults = NSUserDefaults.standardUserDefaults()
+                                userDefaults.setValue(params["username"], forKey: "username")
+                                userDefaults.synchronize()
+                                
                                 self.storeSessionCookie()
                                 vc.navigationController!.dismissViewControllerAnimated(true, completion: nil)
                                 println("logged in")
+                                //xself.updateDB()
                             }
                         case "changePass":
                             println("password changed successfully")
                             break
                         case "sendFriendRequest":
-                            println("friend request sent")
+                            
+                            if let res = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String,String> {
+                                if let friendErr = res["error"] {
+                                    println(friendErr)
+                                }
+                                else{
+                                    println("friend request sent")
+                                }
+                            }
                             break
                         case "logout":
                             KeychainManager.removeItemForKey("id")
@@ -56,9 +75,7 @@ class RequestDealer {
                             if let vc = myVC as? FriendsViewController{
                                 self.updateDatabaseFriends(params, myVC:vc)
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in vc.tableView.reloadData() })
-                                
                             }
-                            
                             println("friend accepted")
                             break
                         default:
@@ -103,6 +120,7 @@ class RequestDealer {
     }
     class func logout(){
         var emptyDic = Dictionary<String, String>()
+        //KeychainManager.removeItemForKey("id")
 
         self.auth(emptyDic, path: path + "/api/user/logout", myVC: nil, method: "POST", action:"logout")
     }
@@ -155,6 +173,87 @@ class RequestDealer {
         }
     }
 
+    class func updateDB(vc:FriendsViewController){
+        var err: NSError?
+        
+        let url = NSURL(string: path + "/api/update")
+        
+        
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+            //println(response)
+            if(error != nil){
+                println(error)
+            }
+            println("-------------------------------------------")
+            println("-------------------------------------------")
+            if let info = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String, Array<String>>{
+                println(info)
+                if let pending_requests = info["pending_requests"]{
+                    self.addPendingRequests(pending_requests)
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in vc.tableView.reloadData() })
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    class func addPendingRequests(pending_requests:[String]){
+        
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        let entity =  NSEntityDescription.entityForName("ReceivedRequestFriends", inManagedObjectContext: managedContext)
+        loadData()
+        
+        if let fr = sh?.pendingFriends {
+            let receivedUSernamesInDB = fr.map{$0.valueForKey("username") as String}
+            for req in pending_requests {
+                if find(receivedUSernamesInDB, req) == nil{
+                    println("adding friend \(req) to ReceivedRequestsFriends")
+                    let friend =  NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
+                    friend.setValue(req, forKey: "username")
+                    sh?.pendingFriends.append(friend)
+                    var error: NSError?
+                    if !managedContext.save(&error) {
+                        println("Could not save \(error), \(error?.userInfo)")
+                    }
+                }
+            }
+        }
+    }
+    class func loadData(){
+        let appDel = UIApplication.sharedApplication().delegate as AppDelegate
+        let managedContext = appDel.managedObjectContext!
+        loadFriends(managedContext, entityName:"ReceivedRequestFriends")
+        loadFriends(managedContext, entityName:"Friends")
+    }
+    class func loadFriends(managedContext: NSManagedObjectContext, entityName: String){
+        let fetchRequest = NSFetchRequest(entityName: entityName)
+        
+        var error:NSError?
+        
+        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as [NSManagedObject]?
+        
+        if let results = fetchedResults {
+            println("results: \(results)")
+            if entityName == "Friends"{
+                let friends = results
+                sh?.friends = results
+            }
+            else{
+                sh?.pendingFriends = results
+            }
+//            for r in results {
+//                managedContext.deleteObject(r)
+//            }
+//            managedContext.save(nil)
+        }
+            
+        else{
+            println("Could not fetch \(entityName): \(error), \(error!.userInfo)")
+        }
+        
+    }
     
     
 }

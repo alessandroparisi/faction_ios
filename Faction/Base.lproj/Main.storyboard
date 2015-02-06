@@ -356,26 +356,8 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mpa-LE-Pyn" id="AZA-JX-hwf">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JVf-fo-Tw6">
-                                                    <rect key="frame" x="530" y="8" width="62" height="30"/>
-                                                    <color key="backgroundColor" red="0.73725490199999999" green="0.14901960780000001" blue="0.1176470588" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <state key="normal" title="Decline">
-                                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="10"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="declineFriend:" destination="ueZ-ZU-xGa" eventType="touchUpInside" id="9C3-QS-Ia9"/>
-                                                    </connections>
-                                                </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8P-Qt-UX2">
-                                                    <rect key="frame" x="460" y="8" width="62" height="30"/>
+                                                    <rect key="frame" x="219" y="8" width="62" height="30"/>
                                                     <color key="backgroundColor" red="0.0" green="0.66666666669999997" blue="0.049691265329999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Accept">
@@ -390,6 +372,24 @@
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="acceptFriend:" destination="ueZ-ZU-xGa" eventType="touchUpInside" id="n0u-tA-uFg"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JVf-fo-Tw6">
+                                                    <rect key="frame" x="289" y="8" width="62" height="30"/>
+                                                    <color key="backgroundColor" red="0.73725490199999999" green="0.14901960780000001" blue="0.1176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="Decline">
+                                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="declineFriend:" destination="ueZ-ZU-xGa" eventType="touchUpInside" id="9C3-QS-Ia9"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -805,9 +805,47 @@
                                     </mask>
                                 </variation>
                             </textField>
+                            <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8UI-Ha-Xof">
+                                <rect key="frame" x="256" y="310" width="107" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="107" id="ATg-lC-HZ4"/>
+                                    <constraint firstAttribute="height" constant="32" id="UcG-cf-X8K"/>
+                                    <constraint firstAttribute="width" constant="80" id="VvO-WI-t75"/>
+                                    <constraint firstAttribute="height" constant="30" id="aMh-jQ-p1o"/>
+                                </constraints>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Logout">
+                                            <attributes>
+                                                <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="VvO-WI-t75"/>
+                                        <exclude reference="UcG-cf-X8K"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="changePassword:" destination="2LH-1X-tBJ" eventType="touchUpInside" id="vN3-qA-xFb"/>
+                                    <action selector="logout:" destination="2LH-1X-tBJ" eventType="touchUpInside" id="RXJ-yj-1W5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="8UI-Ha-Xof" secondAttribute="centerX" id="3QG-lO-eEm"/>
                             <constraint firstAttribute="centerX" secondItem="wFG-ui-eGu" secondAttribute="centerX" id="3hq-t0-mBq"/>
                             <constraint firstItem="WVl-EP-OTI" firstAttribute="top" secondItem="8Bf-Zz-qFc" secondAttribute="bottom" constant="14" id="40g-pW-tgl"/>
                             <constraint firstItem="8Bf-Zz-qFc" firstAttribute="top" secondItem="qKl-VN-mCt" secondAttribute="bottom" constant="22" id="4gV-Jm-Yuw"/>
@@ -816,6 +854,7 @@
                             <constraint firstAttribute="centerX" secondItem="WVl-EP-OTI" secondAttribute="centerX" id="BnJ-iI-2f8"/>
                             <constraint firstItem="i6k-bm-g0H" firstAttribute="top" secondItem="WVl-EP-OTI" secondAttribute="bottom" constant="14" id="DXI-KU-YcJ"/>
                             <constraint firstAttribute="centerX" secondItem="WVl-EP-OTI" secondAttribute="centerX" id="Lud-tH-5M2"/>
+                            <constraint firstItem="8UI-Ha-Xof" firstAttribute="top" secondItem="wFG-ui-eGu" secondAttribute="bottom" constant="43" id="Q6m-Ni-dS5"/>
                             <constraint firstAttribute="centerX" secondItem="qKl-VN-mCt" secondAttribute="centerX" id="aQn-bE-gZl"/>
                             <constraint firstItem="8Bf-Zz-qFc" firstAttribute="top" secondItem="ajG-Kp-NRG" secondAttribute="bottom" constant="30" id="cmq-cs-Bnr"/>
                             <constraint firstAttribute="centerX" secondItem="i6k-bm-g0H" secondAttribute="centerX" id="dY6-H6-rH8"/>
