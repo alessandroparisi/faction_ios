@@ -45,11 +45,7 @@ class LoginViewController : UIViewController, UIActionSheetDelegate {
     }
     
     func authUser(username:String, password:String) {
-        
-        let params = ["identifier":username, "password": password] as Dictionary<String, String>
-
-        RequestDealer.auth(params, path: path + "/api/user/login", myVC: self, method:"POST")
-        
+        RequestDealer.login(username, password: password, vc: self)
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         

@@ -44,7 +44,6 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
-        println("alealealeale")
         let x = self.users[indexPath.row] as String
         print(x)
         cell.textLabel?.text = self.users[indexPath.row] as String
@@ -59,7 +58,7 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         println("Adding user at row \(indexPath.row) with name \(users[indexPath.row])")
-        RequestDealer.addFriend(users[indexPath.row])
+        RequestDealer.sendFriendRequest(users[indexPath.row])
 
         //var image : UIImage = UIImage(named: "osx_design_view_messages")!
         //cell.imageView.image = image
@@ -71,11 +70,14 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     func getUsers() -> Void {
         var err: NSError?
         
-        let url = NSURL(string: "https://faction.notscott.me/api/user/search")
+        let url = NSURL(string: path + "/api/user/search")
      
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            self.users =  NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as Array<String>
+            println(response)
+            if let u = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Array<String> {
+                self.users = u
+            }
             println(self.users)
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })

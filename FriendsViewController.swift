@@ -8,18 +8,18 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class FriendsViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
-    
-    var friends = [String]()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        getFriends()
+        self.updateDB()
+
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -30,22 +30,67 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    
+    override func viewWillAppear(animated: Bool) {
+    }
     
     // MARK: - Table View
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friends.count
+        switch(section){
+        case 0:
+            if let s = sh?.pendingFriends? {
+                return s.count
+            }
+            else{
+                return 0
+            }
+        case 1:
+            if let q = sh?.friends? {
+                return q.count
+            }
+            else {
+                return 0
+            }
+        default: return 0
+        }
     }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
+    func tableView( tableView : UITableView,  titleForHeaderInSection section: Int)->String
+    {
+        switch(section)
+        {
+        case 0: return "Pending Requests"
+        case 1: return "Friends"
+        default:return ""
+        }
         
-        return cell
+    }
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        if(indexPath.section == 0){
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("PotentialFriend") as PotentialFriendCell
+            if let f = sh?.pendingFriends?{
+                let s = f[indexPath.row]
+                cell.textLabel?.text = s.valueForKey("username") as? String
+            }
+            cell.accept.tag = indexPath.row
+            cell.decline.tag = indexPath.row
+            return cell
+        }
+        else{
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
+            if let f = sh?.friends? {
+                let s = f[indexPath.row]
+                cell.textLabel?.text = s.valueForKey("username") as? String
+            }
+            cell.selectionStyle = .None
+            cell.userInteractionEnabled = false
+            return cell
+        }
+        
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -56,8 +101,108 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
-    func getFriends() -> Void {
-        
+    @IBAction func acceptFriend(sender: AnyObject) {
+        if let user = sh?.pendingFriends? {
+            let username = user[sender.tag]
+            removePendingFriend(username)
+            RequestDealer.acceptedFriendRequest(username.valueForKey("username") as String, accepted: "true", vc:self)
+        }
     }
-    
+    @IBAction func declineFriend(sender: AnyObject) {
+        if let user = sh?.pendingFriends? {
+            let username = user[sender.tag]
+            removePendingFriend(username)
+            RequestDealer.acceptedFriendRequest(username.valueForKey("username") as String, accepted: "false", vc:self)
+        }
+    }
+    func removePendingFriend(username:NSManagedObject){
+        let appDel = UIApplication.sharedApplication().delegate as AppDelegate
+        let managedContext = appDel.managedObjectContext!
+        managedContext.deleteObject(username)
+        managedContext.save(nil)
+    }
+    func updateDB(){
+        var err: NSError?
+        
+        let url = NSURL(string: path + "/api/update")
+        
+        
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+            println(response)
+            if(error != nil){
+                println(error)
+            }
+            println("-------------------------------------------")
+            println("-------------------------------------------")
+            if let info = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String, Array<String>>{
+                println(info)
+                if let pending_requests = info["pending_requests"]{
+                    self.addPendingRequests(pending_requests)
+                }
+            }
+        }
+        
+        task.resume()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
+    }
+    func addPendingRequests(pending_requests:[String]){
+        
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        let entity =  NSEntityDescription.entityForName("ReceivedRequestFriends", inManagedObjectContext: managedContext)
+        loadData()
+        
+        var already_exists = false
+        
+        if let fr = sh?.pendingFriends {
+            for req in pending_requests {
+                for u in fr {
+                    if u == req {
+                        already_exists = true
+                    }
+                }
+                if(!already_exists){
+                    let friend =  NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
+                    friend.setValue(req, forKey: "username")
+                    var error: NSError?
+                    if !managedContext.save(&error) {
+                        println("Could not save \(error), \(error?.userInfo)")
+                    }
+                }
+                already_exists = false
+            }
+        }
+    }
+    func loadData(){
+        let appDel = UIApplication.sharedApplication().delegate as AppDelegate
+        let managedContext = appDel.managedObjectContext!
+        loadFriends(managedContext, entityName:"Friends")
+        loadFriends(managedContext, entityName:"ReceivedRequestFriends")
+    }
+    func loadFriends(managedContext: NSManagedObjectContext, entityName: String){
+        let fetchRequest = NSFetchRequest(entityName: entityName)
+        
+        var error:NSError?
+        
+        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as [NSManagedObject]?
+        
+        if let results = fetchedResults {
+            if entityName == "Friends"{
+                sh?.friends = results
+            }
+            else{
+                sh?.pendingFriends = results
+            }
+//            for r in results {
+//                managedContext.deleteObject(r)
+//            }
+        }
+
+        else{
+            println("Could not fetch \(entityName): \(error), \(error!.userInfo)")
+        }
+        //managedContext.save(nil)
+
+    }
 }

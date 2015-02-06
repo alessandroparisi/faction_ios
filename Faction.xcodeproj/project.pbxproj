@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		710ADF0F1A8335A000664ABA /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710ADF0E1A8335A000664ABA /* KeyChainManager.swift */; };
+		710ADF121A84046E00664ABA /* Faction.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 710ADF101A84046E00664ABA /* Faction.xcdatamodeld */; };
 		716021F01A7FF5140061DF68 /* RequestDealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716021EF1A7FF5140061DF68 /* RequestDealer.swift */; };
 		7188B7E01A7EB8F0001D2F86 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 7188B7DF1A7EB8F0001D2F86 /* background.png */; };
 		7188B7E21A7EB95A001D2F86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7E11A7EB95A001D2F86 /* LoginViewController.swift */; };
@@ -24,7 +26,8 @@
 		718EB02E1A6EDB0D00DAB660 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 718EB02C1A6EDB0D00DAB660 /* LaunchScreen.xib */; };
 		718EB03A1A6EDB0D00DAB660 /* FactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718EB0391A6EDB0D00DAB660 /* FactionTests.swift */; };
 		7198EE631A8145860005F7F2 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7198EE621A8145860005F7F2 /* MainTabBarController.swift */; };
-		B3812A2B1A8202A50087DE52 /* Friends.png in Resources */ = {isa = PBXBuildFile; fileRef = B3812A2A1A8202A50087DE52 /* Friends.png */; };
+		71B73FE71A843B3A00C05756 /* PotentialFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B73FE61A843B3A00C05756 /* PotentialFriendCell.swift */; };
+		71B73FE91A845B9000C05756 /* SessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B73FE81A845B9000C05756 /* SessionHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		710ADF0E1A8335A000664ABA /* KeyChainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
+		710ADF111A84046E00664ABA /* Faction.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Faction.xcdatamodel; sourceTree = "<group>"; };
 		716021EF1A7FF5140061DF68 /* RequestDealer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDealer.swift; sourceTree = "<group>"; };
 		7188B7DF1A7EB8F0001D2F86 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		7188B7E11A7EB95A001D2F86 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -59,7 +64,8 @@
 		718EB0381A6EDB0D00DAB660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		718EB0391A6EDB0D00DAB660 /* FactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactionTests.swift; sourceTree = "<group>"; };
 		7198EE621A8145860005F7F2 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = ../MainTabBarController.swift; sourceTree = "<group>"; };
-		B3812A2A1A8202A50087DE52 /* Friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Friends.png; path = ../../../Desktop/Icons/Friends.png; sourceTree = "<group>"; };
+		71B73FE61A843B3A00C05756 /* PotentialFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PotentialFriendCell.swift; sourceTree = "<group>"; };
+		71B73FE81A845B9000C05756 /* SessionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				7188B7E71A7EE54F001D2F86 /* FriendsViewController.swift */,
+				71B73FE61A843B3A00C05756 /* PotentialFriendCell.swift */,
 			);
 			name = "Friends and Requests";
 			sourceTree = "<group>";
@@ -160,9 +167,11 @@
 		718EB0201A6EDB0D00DAB660 /* Faction */ = {
 			isa = PBXGroup;
 			children = (
-				B3812A2A1A8202A50087DE52 /* Friends.png */,
+				710ADF101A84046E00664ABA /* Faction.xcdatamodeld */,
 				718EB0231A6EDB0D00DAB660 /* AppDelegate.swift */,
+				710ADF0E1A8335A000664ABA /* KeyChainManager.swift */,
 				716021EF1A7FF5140061DF68 /* RequestDealer.swift */,
+				71B73FE81A845B9000C05756 /* SessionHelper.swift */,
 				7188B82B1A7F0689001D2F86 /* Images */,
 				7188B82A1A7F0674001D2F86 /* Find Friends */,
 				7188B8291A7F066D001D2F86 /* Friends and Requests */,
@@ -286,7 +295,6 @@
 			files = (
 				718EB0291A6EDB0D00DAB660 /* Main.storyboard in Resources */,
 				7188B7E01A7EB8F0001D2F86 /* background.png in Resources */,
-				B3812A2B1A8202A50087DE52 /* Friends.png in Resources */,
 				718EB02E1A6EDB0D00DAB660 /* LaunchScreen.xib in Resources */,
 				718EB02B1A6EDB0D00DAB660 /* Images.xcassets in Resources */,
 			);
@@ -308,13 +316,17 @@
 			files = (
 				7188B7E21A7EB95A001D2F86 /* LoginViewController.swift in Sources */,
 				7188B82D1A7F0712001D2F86 /* AnswerFactionViewController.swift in Sources */,
+				71B73FE91A845B9000C05756 /* SessionHelper.swift in Sources */,
 				7198EE631A8145860005F7F2 /* MainTabBarController.swift in Sources */,
 				7188B7EE1A7EF0DF001D2F86 /* SendFactionViewController.swift in Sources */,
+				710ADF0F1A8335A000664ABA /* KeyChainManager.swift in Sources */,
 				7188B7E81A7EE54F001D2F86 /* FriendsViewController.swift in Sources */,
 				718EB0241A6EDB0D00DAB660 /* AppDelegate.swift in Sources */,
+				71B73FE71A843B3A00C05756 /* PotentialFriendCell.swift in Sources */,
 				7188B7E41A7EB964001D2F86 /* RegisterViewController.swift in Sources */,
 				7188B7EC1A7EEA8A001D2F86 /* SearchUsersViewController.swift in Sources */,
 				7188B7F01A7EFB0C001D2F86 /* SettingsViewController.swift in Sources */,
+				710ADF121A84046E00664ABA /* Faction.xcdatamodeld in Sources */,
 				7188B7F21A7EFB1E001D2F86 /* ReceivedFactionsViewController.swift in Sources */,
 				7188B8241A7F037B001D2F86 /* ChooseFriendsViewController.swift in Sources */,
 				716021F01A7FF5140061DF68 /* RequestDealer.swift in Sources */,
@@ -521,6 +533,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		710ADF101A84046E00664ABA /* Faction.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				710ADF111A84046E00664ABA /* Faction.xcdatamodel */,
+			);
+			currentVersion = 710ADF111A84046E00664ABA /* Faction.xcdatamodel */;
+			path = Faction.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 718EB0161A6EDB0D00DAB660 /* Project object */;
 }

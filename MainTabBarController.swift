@@ -8,15 +8,18 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 var notLoggedIn = true
+var sh: SessionHelper?
 
 class MainTabBarController : UITabBarController {
     override func viewDidAppear(animated: Bool) {
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let name = defaults.stringForKey("id") //also check to see hes not logged out? if he is we can re log him in?
+    
+        if let name = KeychainManager.stringForKey("id") //also check to see hes not logged out? if he is we can re log him in?
         {
+            sh = SessionHelper()
+            
             println(name)
             println("returning user")
         }
@@ -27,4 +30,5 @@ class MainTabBarController : UITabBarController {
         }
         //RequestDealer.logout()
     }
+    
 }
