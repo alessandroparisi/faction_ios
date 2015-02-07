@@ -82,7 +82,7 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
             return cell
         }
         else{
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("Friend") as UITableViewCell
             if let f = sh? {
                 let s = f.friends[indexPath.row]
                 cell.textLabel?.text = s.valueForKey("username") as? String
@@ -116,10 +116,29 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
         }
     }
     func removePendingFriend(username:NSManagedObject){
+        let nameToDelete = username.valueForKey("username") as String
+        
+        println("lines: \(sh?.pendingFriends)")
+        
+        let allNames = sh?.pendingFriends.map{$0.valueForKey("username") as String}
+
+        if let names = allNames {
+            var i = 0
+            for name in names {
+                if nameToDelete == name {
+                    sh?.pendingFriends.removeAtIndex(i)
+                    break
+                }
+                ++i
+            }
+        }
+        
         let appDel = UIApplication.sharedApplication().delegate as AppDelegate
         let managedContext = appDel.managedObjectContext!
         managedContext.deleteObject(username)
         managedContext.save(nil)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
+
     }
 
 }

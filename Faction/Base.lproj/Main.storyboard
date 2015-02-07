@@ -358,7 +358,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8P-Qt-UX2">
                                                     <rect key="frame" x="219" y="8" width="62" height="30"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.66666666669999997" blue="0.049691265329999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.66666666669999997" blue="0.039289410938713819" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Accept">
                                                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -376,7 +376,7 @@
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JVf-fo-Tw6">
                                                     <rect key="frame" x="289" y="8" width="62" height="30"/>
-                                                    <color key="backgroundColor" red="0.73725490199999999" green="0.14901960780000001" blue="0.1176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.66666666669999997" green="0.23468383199079179" blue="0.00075450368420180134" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Decline">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

@@ -130,7 +130,7 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
         println(factionText!)
         println(faction)
         
-        let params = ["to":x,"faction":factionText!,"fact":faction] as Dictionary<String, AnyObject?>
+        let params = ["to":x,"faction":factionText!,"fact":faction] as Dictionary<String, AnyObject>
         RequestDealer.aleHasAShittyAuth(params, path: path + "/api/factions/send", myVC: self, method:"POST")
         self.navigationController!.popViewControllerAnimated(true)
     }
@@ -138,18 +138,23 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     func getFriends() -> Void {
         // Placeholder code until they fix the fucking backend
         
-        var err: NSError?
-        
-        let url = NSURL(string: "https://faction.notscott.me/api/user/search")
-        
-        
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            self.friends =  NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as Array<String>
-            println(self.friends)
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
+        if let session = sh? {
+            let myFriends = sh?.friends.map{$0.valueForKey("username") as String}
+            self.friends = myFriends!
         }
-        
-        task.resume()
+        //println(friends)
+//        var err: NSError?
+//        
+//        let url = NSURL(string: "https://faction.notscott.me/api/user/search")
+//        
+//        
+//        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+//            self.friends =  NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as Array<String>
+//            println(self.friends)
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
+//        }
+//        
+//        task.resume()
     }
 
 }

@@ -147,7 +147,7 @@ class RequestDealer {
     }
     class func acceptedFriendRequest(username:String, accepted:String, vc: UIViewController){
         var params = ["username":username, "accepted":accepted]
-        self.auth(params, path: path + "api/users/accept-friend", myVC: vc, method: "POST", action: "acceptFriendRequest")
+        self.auth(params, path: path + "/api/user/accept-friend", myVC: vc, method: "POST", action: "acceptFriendRequest")
     }
     
     class func storeSessionCookie(){
@@ -167,12 +167,12 @@ class RequestDealer {
         if let val = params["accepted"] {
             if val == "true" {
                 if let name = params["username"] {
-                    self.saveNewFriend(name)
+                    self.saveNewFriend(name, vc: myVC)
                 }
             }
         }
     }
-    class func saveNewFriend(username:String){
+    class func saveNewFriend(username:String, vc:FriendsViewController){
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         
         let managedContext = appDelegate.managedObjectContext!
@@ -183,13 +183,14 @@ class RequestDealer {
         if !managedContext.save(&error) {
             println("Could not save \(error), \(error?.userInfo)")
         }
+        loadData()
     }
     
     
     
-    class func aleHasAShittyAuth(params: Dictionary<String,AnyObject?>, path: String, myVC: UIViewController?, method:String) {
+    class func aleHasAShittyAuth(params: Dictionary<String,AnyObject>, path: String, myVC: UIViewController?, method:String) {
         var err: NSError?
-        
+        println(params)
         let url = NSURL(string: path)
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = method
@@ -206,14 +207,23 @@ class RequestDealer {
                 println(error)
             }
             else{
-                println(response)
+                //println(response)
                 if let httpResponse = response as? NSHTTPURLResponse {
                     println(httpResponse.statusCode)
                     if(httpResponse.statusCode == 201){
                         println("Success, Faction sent")
                     }
                     else if(httpResponse.statusCode == 400){
-                        println("Failure, Error.. something not present")
+                        println(data)
+                        if let res = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as String?{
+                            println("res:  \(res)")
+//                            if let myerr = res["error"] {
+//                                println(myerr)
+//                            }
+//                            else{
+//                                println("friend request sent")
+//                            }
+                        }
                     }
                     else{
                         println("Failure, Error.. something went terribly wrong")
