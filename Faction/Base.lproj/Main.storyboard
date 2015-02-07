@@ -702,7 +702,7 @@
             </objects>
             <point key="canvasLocation" x="2242" y="1492"/>
         </scene>
-        <!--Answer Faction View Controller-->
+        <!--Faction-->
         <scene sceneID="PA8-oj-v45">
             <objects>
                 <viewController id="l7l-a3-5k0" customClass="AnswerFactionViewController" customModule="Faction" customModuleProvider="target" sceneMemberID="viewController">
@@ -713,8 +713,23 @@
                     <view key="view" contentMode="scaleToFill" id="hhi-DL-wU1">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XlP-nF-DoO">
+                                <rect key="frame" x="0.0" y="138" width="600" height="192"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="IB7-sw-H09" id="lgj-UK-7N0"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Faction" id="2he-EK-3Bq"/>
+                    <connections>
+                        <outlet property="factionText" destination="XlP-nF-DoO" id="Kt8-9Z-RgJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADz-4g-lD9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1043,23 +1058,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4gI-pK-YTU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3851" y="1462"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="aZU-je-Z30">
-            <objects>
-                <viewController id="qQy-X4-Ikf" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Jsw-oU-sGB"/>
-                        <viewControllerLayoutGuide type="bottom" id="5cx-6w-Ygg"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="uRP-ns-Jsq">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pdq-65-ZnA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
     </scenes>
     <resources>
