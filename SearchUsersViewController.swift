@@ -63,9 +63,6 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
         //var image : UIImage = UIImage(named: "osx_design_view_messages")!
         //cell.imageView.image = image
         
-        
-        
-        
     }
     func getUsers() -> Void {
         var err: NSError?
@@ -74,9 +71,21 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
      
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            println(response)
+            //println(response)
             if let u = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Array<String> {
-                self.users = u
+                var allUsers = u
+                var def = NSUserDefaults.standardUserDefaults()
+                if let defaultName:AnyObject = def.valueForKey("username"){
+                    for user in allUsers {
+                        if(user != defaultName as String){
+                            self.users.append(user)
+                        }
+                    }
+                }
+                else{
+                    println("else")
+                    self.users = allUsers
+                }
             }
             println(self.users)
             

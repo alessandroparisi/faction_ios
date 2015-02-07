@@ -45,7 +45,13 @@ class RequestDealer {
                             if let vc = myVC {
                                 
                                 var userDefaults = NSUserDefaults.standardUserDefaults()
-                                userDefaults.setValue(params["username"], forKey: "username")
+                                
+                                if (action == "login"){
+                                    userDefaults.setValue(params["identifier"], forKey: "username")
+                                }
+                                else{
+                                    userDefaults.setValue(params["username"], forKey: "username")
+                                }
                                 userDefaults.synchronize()
                                 
                                 self.storeSessionCookie()
@@ -68,7 +74,12 @@ class RequestDealer {
                             }
                             break
                         case "logout":
+                            var userDefaults = NSUserDefaults.standardUserDefaults()
+                            userDefaults.removeObjectForKey("username")
                             KeychainManager.removeItemForKey("id")
+                            if let vc = myVC as? SettingsViewController {
+                                vc.tabBarController!.viewDidAppear(true)
+                            }
                             println("logout successful")
                             break
                         case "acceptFriendRequest":
@@ -110,6 +121,7 @@ class RequestDealer {
         }
         task.resume()
     }
+ 
     class func login(username:String, password:String, vc:UIViewController){
         let params = ["identifier":username, "password": password] as Dictionary<String, String>
         RequestDealer.auth(params, path: path + "/api/user/login", myVC: vc, method:"POST", action:"login")
@@ -118,11 +130,11 @@ class RequestDealer {
         let params = ["action":"register", "email":email, "password":password, "username": username] as Dictionary<String, String>
         RequestDealer.auth(params, path: path + "/api/user/new", myVC: vc, method:"POST", action:"register")
     }
-    class func logout(){
+    class func logout(vc:UIViewController){
         var emptyDic = Dictionary<String, String>()
         //KeychainManager.removeItemForKey("id")
 
-        self.auth(emptyDic, path: path + "/api/user/logout", myVC: nil, method: "POST", action:"logout")
+        self.auth(emptyDic, path: path + "/api/user/logout", myVC: vc, method: "POST", action:"logout")
     }
     class func changePassword(oldPass:String, newPass:String){
         var params = ["old":oldPass, "new":newPass]
@@ -172,6 +184,50 @@ class RequestDealer {
             println("Could not save \(error), \(error?.userInfo)")
         }
     }
+    
+    
+    
+    class func aleHasAShittyAuth(params: Dictionary<String,AnyObject?>, path: String, myVC: UIViewController?, method:String) {
+        var err: NSError?
+        
+        let url = NSURL(string: path)
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = method
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        let l = params as Dictionary<String, AnyObject>
+        
+        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(l, options: nil, error: &err)
+        
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error -> Void in
+            if((error) != nil){
+                println(error)
+            }
+            else{
+                println(response)
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    println(httpResponse.statusCode)
+                    if(httpResponse.statusCode == 201){
+                        println("Success, Faction sent")
+                    }
+                    else if(httpResponse.statusCode == 400){
+                        println("Failure, Error.. something not present")
+                    }
+                    else{
+                        println("Failure, Error.. something went terribly wrong")
+                        
+                    }
+                }
+                else {
+                    println("failed")
+                    assertionFailure("unexpected response")
+                }
+            }
+        }
+        task.resume()
+    }
 
     class func updateDB(vc:FriendsViewController){
         var err: NSError?
@@ -206,6 +262,7 @@ class RequestDealer {
         loadData()
         
         if let fr = sh?.pendingFriends {
+            //println("fr: \(fr)")
             let receivedUSernamesInDB = fr.map{$0.valueForKey("username") as String}
             for req in pending_requests {
                 if find(receivedUSernamesInDB, req) == nil{
@@ -224,6 +281,7 @@ class RequestDealer {
     class func loadData(){
         let appDel = UIApplication.sharedApplication().delegate as AppDelegate
         let managedContext = appDel.managedObjectContext!
+        
         loadFriends(managedContext, entityName:"ReceivedRequestFriends")
         loadFriends(managedContext, entityName:"Friends")
     }

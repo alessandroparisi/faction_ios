@@ -78,6 +78,7 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
             }
             cell.accept.tag = indexPath.row
             cell.decline.tag = indexPath.row
+            cell.selectionStyle = .None
             return cell
         }
         else{
@@ -87,7 +88,6 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
                 cell.textLabel?.text = s.valueForKey("username") as? String
             }
             cell.selectionStyle = .None
-            cell.userInteractionEnabled = false
             return cell
         }
         

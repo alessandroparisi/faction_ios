@@ -30,10 +30,7 @@ class SettingsViewController : UIViewController{
         }
     }
     @IBAction func logout(sender: AnyObject) {
-        RequestDealer.logout()
-        let storyboard = self.storyboard!
-        let tabVC = storyboard.instantiateViewControllerWithIdentifier("tabVC") as MainTabBarController
-        self.presentViewController(tabVC, animated: false, completion: nil)
+        RequestDealer.logout(self)
     }
     
 }
