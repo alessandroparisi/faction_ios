@@ -356,9 +356,13 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mpa-LE-Pyn" id="AZA-JX-hwf">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8P-Qt-UX2">
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8P-Qt-UX2">
                                                     <rect key="frame" x="219" y="8" width="62" height="30"/>
                                                     <color key="backgroundColor" red="0.0" green="0.66666666669999997" blue="0.039289410938713819" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="TaM-SD-LmV"/>
+                                                        <constraint firstAttribute="width" constant="62" id="ga7-Fj-QLA"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Accept">
                                                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -374,9 +378,13 @@
                                                         <action selector="acceptFriend:" destination="ueZ-ZU-xGa" eventType="touchUpInside" id="n0u-tA-uFg"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JVf-fo-Tw6">
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JVf-fo-Tw6">
                                                     <rect key="frame" x="289" y="8" width="62" height="30"/>
-                                                    <color key="backgroundColor" red="0.66666666669999997" green="0.23468383199079179" blue="0.00075450368420180134" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.66666666669999997" green="0.17410800766584164" blue="0.010964665374227545" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="bVa-Gk-ls0"/>
+                                                        <constraint firstAttribute="width" constant="62" id="cze-uN-2ey"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Decline">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -393,6 +401,10 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="JVf-fo-Tw6" firstAttribute="leading" secondItem="F8P-Qt-UX2" secondAttribute="trailing" constant="8" id="B0e-LK-T4n"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="JVf-fo-Tw6" secondAttribute="trailing" id="Bzi-1d-8FG"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="accept" destination="F8P-Qt-UX2" id="8hp-70-tMh"/>
@@ -1038,7 +1050,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ixk-tU-wx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4574" y="395"/>
+            <point key="canvasLocation" x="4598" y="425"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tQF-gT-PQU">

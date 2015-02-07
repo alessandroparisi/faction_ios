@@ -78,7 +78,9 @@ class RequestDealer {
                             userDefaults.removeObjectForKey("username")
                             KeychainManager.removeItemForKey("id")
                             if let vc = myVC as? SettingsViewController {
-                                vc.tabBarController!.viewDidAppear(true)
+                                if let myTabVC = vc.tabBarController! as? MainTabBarController {
+                                    myTabVC.viewDidAppear(true)
+                                }
                             }
                             println("logout successful")
                             break
@@ -177,13 +179,22 @@ class RequestDealer {
         
         let managedContext = appDelegate.managedObjectContext!
         let entity =  NSEntityDescription.entityForName("Friends", inManagedObjectContext: managedContext)
-        let friend =  NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
-        friend.setValue(username, forKey: "username")
-        var error: NSError?
-        if !managedContext.save(&error) {
-            println("Could not save \(error), \(error?.userInfo)")
+        
+        if let fr = sh?.friends {
+            //println("fr: \(fr)")
+            let receivedUsernamesInDB = fr.map{$0.valueForKey("username") as String}
+            if find(receivedUsernamesInDB, username) == nil{
+                println("adding friend \(username) to Friend")
+                let friend =  NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
+                friend.setValue(username, forKey: "username")
+                sh?.friends.append(friend)
+                var error: NSError?
+                if !managedContext.save(&error) {
+                    println("Could not save \(error), \(error?.userInfo)")
+                }
+                //loadData()
+            }
         }
-        loadData()
     }
     
     
@@ -273,9 +284,9 @@ class RequestDealer {
         
         if let fr = sh?.pendingFriends {
             //println("fr: \(fr)")
-            let receivedUSernamesInDB = fr.map{$0.valueForKey("username") as String}
+            let receivedUsernamesInDB = fr.map{$0.valueForKey("username") as String}
             for req in pending_requests {
-                if find(receivedUSernamesInDB, req) == nil{
+                if find(receivedUsernamesInDB, req) == nil{
                     println("adding friend \(req) to ReceivedRequestsFriends")
                     let friend =  NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
                     friend.setValue(req, forKey: "username")
