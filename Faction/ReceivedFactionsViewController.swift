@@ -12,6 +12,7 @@ import UIKit
 class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     
+    
     var factions = [String]()
     
     override func awakeFromNib() {
@@ -54,8 +55,8 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
     }
+    
     func getFactions() -> Void {
         println("a")
         let url = NSURL(string: path + "/api/update")

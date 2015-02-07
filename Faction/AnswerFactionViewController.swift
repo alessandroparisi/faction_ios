@@ -10,5 +10,5 @@ import Foundation
 import UIKit
 
 class AnswerFactionViewController : UIViewController {
-    
+    @IBOutlet var factionText : UITextView!
 }
