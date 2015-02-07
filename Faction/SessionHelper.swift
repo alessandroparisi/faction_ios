@@ -13,9 +13,13 @@ class SessionHelper {
     var username: String?
     var friends: [NSManagedObject]
     var pendingFriends: [NSManagedObject]
+    var answeredFactions: [Faction]
+    var unansweredFactions: [Faction]
     
     init(){
         self.friends = [NSManagedObject]()
         self.pendingFriends = [NSManagedObject]()
+        self.answeredFaction = [Faction]()
+        self.unansweredFactions = [Faction]()
     }
 }
