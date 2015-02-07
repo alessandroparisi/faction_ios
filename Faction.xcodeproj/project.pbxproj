@@ -29,6 +29,7 @@
 		71B73FE71A843B3A00C05756 /* PotentialFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B73FE61A843B3A00C05756 /* PotentialFriendCell.swift */; };
 		71B73FE91A845B9000C05756 /* SessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B73FE81A845B9000C05756 /* SessionHelper.swift */; };
 		71B73FF31A85BD4000C05756 /* Faction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B73FF21A85BD4000C05756 /* Faction.swift */; };
+		71E977341A8692D300364C04 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E977331A8692D300364C04 /* Friend.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		71B73FE61A843B3A00C05756 /* PotentialFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PotentialFriendCell.swift; sourceTree = "<group>"; };
 		71B73FE81A845B9000C05756 /* SessionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionHelper.swift; sourceTree = "<group>"; };
 		71B73FF21A85BD4000C05756 /* Faction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Faction.swift; sourceTree = SOURCE_ROOT; };
+		71E977331A8692D300364C04 /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			children = (
 				710ADF101A84046E00664ABA /* Faction.xcdatamodeld */,
 				71B73FF21A85BD4000C05756 /* Faction.swift */,
+				71E977331A8692D300364C04 /* Friend.swift */,
 				718EB0231A6EDB0D00DAB660 /* AppDelegate.swift */,
 				710ADF0E1A8335A000664ABA /* KeyChainManager.swift */,
 				716021EF1A7FF5140061DF68 /* RequestDealer.swift */,
@@ -332,6 +335,7 @@
 				7188B7F01A7EFB0C001D2F86 /* SettingsViewController.swift in Sources */,
 				710ADF121A84046E00664ABA /* Faction.xcdatamodeld in Sources */,
 				7188B7F21A7EFB1E001D2F86 /* ReceivedFactionsViewController.swift in Sources */,
+				71E977341A8692D300364C04 /* Friend.swift in Sources */,
 				7188B8241A7F037B001D2F86 /* ChooseFriendsViewController.swift in Sources */,
 				716021F01A7FF5140061DF68 /* RequestDealer.swift in Sources */,
 			);

@@ -174,29 +174,6 @@ class RequestDealer {
             }
         }
     }
-    class func saveNewFriend(username:String, vc:FriendsViewController){
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext!
-        let entity =  NSEntityDescription.entityForName("Friends", inManagedObjectContext: managedContext)
-        
-        if let fr = sh?.friends {
-            //println("fr: \(fr)")
-            let receivedUsernamesInDB = fr.map{$0.valueForKey("username") as String}
-            if find(receivedUsernamesInDB, username) == nil{
-                println("adding friend \(username) to Friend")
-                let friend =  NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
-                friend.setValue(username, forKey: "username")
-                sh?.friends.append(friend)
-                var error: NSError?
-                if !managedContext.save(&error) {
-                    println("Could not save \(error), \(error?.userInfo)")
-                }
-                //loadData()
-            }
-        }
-    }
-    
     
     
     class func aleHasAShittyAuth(params: Dictionary<String,AnyObject>, path: String, myVC: UIViewController?, method:String) {
@@ -266,7 +243,7 @@ class RequestDealer {
             if let info = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String, Array<String>>{
                 println(info)
                 if let pending_requests = info["pending_requests"]{
-                    self.addPendingRequests(pending_requests)
+                    self.addPendingFriendRequests(pending_requests)
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in vc.tableView.reloadData() })
                 }
             }
@@ -274,32 +251,51 @@ class RequestDealer {
         
         task.resume()
     }
-    class func addPendingRequests(pending_requests:[String]){
+    class func addPendingFriendRequests(pending_requests:[String]){
         
         
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let managedContext = appDelegate.managedObjectContext!
-        let entity =  NSEntityDescription.entityForName("ReceivedRequestFriends", inManagedObjectContext: managedContext)
-        loadData()
+        loadFriendData()
         
         if let fr = sh?.pendingFriends {
             //println("fr: \(fr)")
-            let receivedUsernamesInDB = fr.map{$0.valueForKey("username") as String}
+            let receivedUsernamesInDB = fr.map{$0.username as String}
             for req in pending_requests {
                 if find(receivedUsernamesInDB, req) == nil{
                     println("adding friend \(req) to ReceivedRequestsFriends")
-                    let friend =  NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
-                    friend.setValue(req, forKey: "username")
-                    sh?.pendingFriends.append(friend)
+                    //Friend.createInManagedObjectContext(managedContext, username: req)
+                    sh?.pendingFriends.append(Friend.createInManagedObjectContext(managedContext, username: req, entityName:"ReceivedRequestFriends"))
                     var error: NSError?
                     if !managedContext.save(&error) {
                         println("Could not save \(error), \(error?.userInfo)")
                     }
                 }
             }
+            //loadFriends(managedContext, entityName:"ReceivedRequestFriends")
         }
     }
-    class func loadData(){
+    class func saveNewFriend(username:String, vc:FriendsViewController){
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        
+        if let fr = sh?.friends {
+            //println("fr: \(fr)")
+            let receivedUsernamesInDB = fr.map{$0.username}
+            if find(receivedUsernamesInDB, username) == nil{
+                println("adding friend \(username) to Friend")
+                sh?.friends.append(Friend.createInManagedObjectContext(managedContext, username: username, entityName:"Friends"))
+                var error: NSError?
+                if !managedContext.save(&error) {
+                    println("Could not save \(error), \(error?.userInfo)")
+                }
+                //loadFriends(managedContext, entityName:"Friends")
+                //dispatch_async(dispatch_get_main_queue(), { () -> Void in vc.tableView.reloadData() })
+            }
+        }
+    }
+    
+    class func loadFriendData(){
         let appDel = UIApplication.sharedApplication().delegate as AppDelegate
         let managedContext = appDel.managedObjectContext!
         
@@ -311,13 +307,14 @@ class RequestDealer {
         
         var error:NSError?
         
-        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as [NSManagedObject]?
+        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [Friend]
         
         if let results = fetchedResults {
-            println("results: \(results)")
+            println("\(entityName) results: \(results)")
             if entityName == "Friends"{
                 let friends = results
                 sh?.friends = results
+                println("\(entityName) after results: \(sh?.friends )")
             }
             else{
                 sh?.pendingFriends = results
@@ -329,7 +326,7 @@ class RequestDealer {
         }
             
         else{
-            println("Could not fetch \(entityName): \(error), \(error!.userInfo)")
+            println("Could not fetch \(entityName): \(error)")
         }
         
     }

@@ -10,15 +10,15 @@ import Foundation
 import CoreData
 
 class SessionHelper {
-    var username: String?
-    var friends: [NSManagedObject]
-    var pendingFriends: [NSManagedObject]
+//    var username: String?
+    var friends: [Friend]
+    var pendingFriends: [Friend]
     var answeredFactions: [Faction]
     var unansweredFactions: [Faction]
     
     init(){
-        self.friends = [NSManagedObject]()
-        self.pendingFriends = [NSManagedObject]()
+        self.friends = [Friend]()
+        self.pendingFriends = [Friend]()
         self.answeredFactions = [Faction]()
         self.unansweredFactions = [Faction]()
     }
