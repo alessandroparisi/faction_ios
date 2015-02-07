@@ -19,7 +19,7 @@ class SessionHelper {
     init(){
         self.friends = [NSManagedObject]()
         self.pendingFriends = [NSManagedObject]()
-        self.answeredFaction = [Faction]()
+        self.answeredFactions = [Faction]()
         self.unansweredFactions = [Faction]()
     }
 }
