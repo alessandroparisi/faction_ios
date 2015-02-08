@@ -686,9 +686,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jzg-Qa-qNC" id="ANh-Vi-22O">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="l7l-a3-5k0" kind="show" id="v5m-Dp-5uw"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -708,6 +705,7 @@
                     <navigationItem key="navigationItem" title="Received Factions" id="iGi-pk-cv8"/>
                     <connections>
                         <outlet property="tableView" destination="iOa-go-DUU" id="WtD-OA-TbD"/>
+                        <segue destination="l7l-a3-5k0" kind="show" identifier="view_faction" id="6rh-fp-DCv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U7K-q7-Og2" userLabel="First Responder" sceneMemberID="firstResponder"/>

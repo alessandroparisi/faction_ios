@@ -12,8 +12,6 @@ import UIKit
 class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     
-    var currentText: String = ""
-    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -107,26 +105,28 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
+        println("getting text")
         if(indexPath.section == 0){
             if let t = sh?.factionsReceived[indexPath.row].story {
-                currentText = t
+                self.performSegueWithIdentifier("view_faction", sender: t)
             }
         }
         else{
             if let t = sh?.factionsSent[indexPath.row].story {
-                currentText = t
+                self.performSegueWithIdentifier("view_faction", sender: t)
             }
         }
         
     }
-    
+//    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var vc = segue.destinationViewController as AnswerFactionViewController
-        println("Current text \(currentText)")
-        vc.textViewText = currentText
-        
+        if let t = sender as? String {
+            println("setting text \(t)")
+            vc.textViewText = t
+        }
     }
-    
+//
     
     func getFactions() -> Void {
     

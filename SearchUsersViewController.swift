@@ -19,8 +19,10 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        getUsers()
         tableView.reloadData()
+    }
+    override func viewWillAppear(animated: Bool) {
+        getUsers()
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -64,6 +66,7 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
         
     }
     func getUsers() -> Void {
+        self.users = []
         var err: NSError?
         
         let url = NSURL(string: path + "/api/user/search")
