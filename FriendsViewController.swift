@@ -37,7 +37,7 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
         var factionVC = factionNav.viewControllers?[0] as ReceivedFactionsViewController
 
         //RequestDealer.updateDB(self, factionVC: factionVC)
-        RequestDealer.getAllInfoOnLogin(self, factionVC: factionVC)
+        RequestDealer.getAllInfoOnLogin(self, factionVC: factionVC, chooseVC: nil)
 
     }
     

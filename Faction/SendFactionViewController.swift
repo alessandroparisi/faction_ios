@@ -23,6 +23,11 @@ class SendFactionViewController: UIViewController, UITextViewDelegate {
 //    }
 
     
+    override func viewWillAppear(animated: Bool) {
+        faction = ""
+        textView.text = ""
+    }
+    
     @IBOutlet weak var True: UIButton!
     @IBOutlet weak var False: UIButton!
     @IBOutlet var textView: UITextView!
@@ -32,6 +37,7 @@ class SendFactionViewController: UIViewController, UITextViewDelegate {
     @IBAction func sendFactionFalse(sender: AnyObject) {
         
     }
+    
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         let newLength = countElements(textView.text!) - range.length

@@ -89,7 +89,7 @@ class RequestDealer {
                                     }
                                     //println("friend request sent")
                                     if let friendVC = myVC as? FriendsViewController {
-                                        self.getAllInfoOnLogin(friendVC, factionVC: nil)
+                                        self.getAllInfoOnLogin(friendVC, factionVC: nil, chooseVC: nil)
                                     }
                                 }
                             }
@@ -110,7 +110,7 @@ class RequestDealer {
                                 //self.updateDatabaseFriends(params)
                                 //self.updateDB(self, factionVC: s, isNew: <#Bool#>)
                                 
-                                self.getAllInfoOnLogin(vc, factionVC:nil)
+                                self.getAllInfoOnLogin(vc, factionVC:nil, chooseVC: nil)
                                 
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in vc.tableView.reloadData() })
                             }
@@ -231,15 +231,15 @@ class RequestDealer {
                     }
                     else if(httpResponse.statusCode == 400){
                         println(data)
-                        if let res = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as String?{
-                            println("res:  \(res)")
-//                            if let myerr = res["error"] {
-//                                println(myerr)
-//                            }
-//                            else{
-//                                println("friend request sent")
-//                            }
-                        }
+//                        if let res = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as AnyObject{
+//                            println("res:  \(res)")
+////                            if let myerr = res["error"] {
+////                                println(myerr)
+////                            }
+////                            else{
+////                                println("friend request sent")
+////                            }
+//                        }
                     }
                     else{
                         println("Failure, Error.. something went terribly wrong")
@@ -409,7 +409,7 @@ class RequestDealer {
 //        managedContext.save(nil)
 //    }
     
-    class func getAllInfoOnLogin(friendVC: FriendsViewController?, factionVC: ReceivedFactionsViewController?){
+    class func getAllInfoOnLogin(friendVC: FriendsViewController?, factionVC: ReceivedFactionsViewController?, chooseVC: ChooseFriendViewController?){
         var err: NSError?
         
         let url = NSURL(string: path + "/api/user/info")
@@ -477,6 +477,11 @@ class RequestDealer {
                         }
                     }
                     if let f = factionVC {
+                        if let tableView = f.tableView {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in tableView.reloadData() })
+                        }
+                    }
+                    if let f = chooseVC {
                         if let tableView = f.tableView {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in tableView.reloadData() })
                         }

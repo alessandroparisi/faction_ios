@@ -15,7 +15,6 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
   
     @IBOutlet var tableView: UITableView!
     
-    var friends = [String]()
     var selectedFriends = [Int: String]()
     var factionText : String?
     var faction : String = ""
@@ -30,8 +29,18 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        getFriends()
-        tableView.reloadData()
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        var tabBar = self.tabBarController!
+        
+        var factionNav = tabBar.viewControllers?[2] as UINavigationController
+        var factionVC = factionNav.viewControllers?[0] as ReceivedFactionsViewController
+        
+        var friendsNav = tabBar.viewControllers?[0] as UINavigationController
+        var friendsVC = friendsNav.viewControllers?[0] as FriendsViewController
+        
+        RequestDealer.getAllInfoOnLogin(friendsVC, factionVC: factionVC, chooseVC: self)
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -51,15 +60,19 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friends.count
+        if let f = sh?.friends {
+            return f.count
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
         
-        let specificFriend = self.friends[indexPath.row] as String
-        print(specificFriend)
-        cell.textLabel?.text = self.friends[indexPath.row] as String
+        if let f = sh?.friends {
+            let specificFriend = f[indexPath.row]
+            cell.textLabel?.text = f[indexPath.row]
+        }
         
         return cell
     }
@@ -71,7 +84,6 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
-        println("Sending Faction to user at row \(indexPath.row) with name \(friends[indexPath.row])")
         var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         
         var selected = isSelected(indexPath.row)
@@ -81,9 +93,10 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
             selectedCell.contentView.backgroundColor = UIColor.whiteColor()
         }
         else{
-            selectedFriends[indexPath.row] = friends[indexPath.row]
-            selectedCell.contentView.backgroundColor = UIColor.greenColor()
-            
+            if let f = sh?.friends {
+                selectedFriends[indexPath.row] = f[indexPath.row]
+                selectedCell.contentView.backgroundColor = UIColor.greenColor()
+            }
             //selectedFriends.updateValue(friends[indexPath.row], forKey: indexPath.row)
         }
         println(selectedFriends)
@@ -95,8 +108,10 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
         
         var selected = isSelected(indexPath.row)
         if selected {
-            selectedFriends[indexPath.row] = friends[indexPath.row]
-            cellToDeSelect.contentView.backgroundColor = UIColor.greenColor()
+            if let f = sh?.friends {
+                selectedFriends[indexPath.row] = f[indexPath.row]
+                cellToDeSelect.contentView.backgroundColor = UIColor.greenColor()
+            }
         }
         else{
             selectedFriends.removeValueForKey(indexPath.row)
@@ -136,9 +151,6 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     }
     
     func getFriends() -> Void {
-        if let f = sh?.friends {
-            friends = f
-        }
         // Placeholder code until they fix the fucking backend
         
 //        if let session = sh? {

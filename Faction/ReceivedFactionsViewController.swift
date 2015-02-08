@@ -27,8 +27,9 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
         var friendsNav = tabBar.viewControllers?[0] as UINavigationController
         var friendsVC = friendsNav.viewControllers?[0] as FriendsViewController
 
+        
         //RequestDealer.updateDB(friendsVC, factionVC: self)
-        RequestDealer.getAllInfoOnLogin(friendsVC, factionVC: self)
+        RequestDealer.getAllInfoOnLogin(friendsVC, factionVC: self, chooseVC: nil)
     }
     
     override func didReceiveMemoryWarning() {
