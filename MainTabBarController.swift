@@ -48,7 +48,7 @@ class MainTabBarController : UITabBarController, UITabBarControllerDelegate {
             let authVC = storyboard.instantiateViewControllerWithIdentifier("authNav") as UINavigationController
             self.presentViewController(authVC, animated: false, completion: nil)
         }
-        
+
         //RequestDealer.logout()
     }
 //    func updateAfterLogout(){

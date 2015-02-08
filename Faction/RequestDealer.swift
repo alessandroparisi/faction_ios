@@ -13,7 +13,7 @@ import CoreData
 class RequestDealer {
     
     
-    class func auth(params: Dictionary<String,String>, path: String, myVC: UIViewController?, method:String, action:String) {
+    class func auth(params: Dictionary<String,String>, path: String, myVC: UIViewController?, method:String, action:String) -> Int{
         var err: NSError?
         
         let url = NSURL(string: path)
@@ -38,12 +38,25 @@ class RequestDealer {
                 //println(response)
                 if let httpResponse = response as? NSHTTPURLResponse {
                     println(httpResponse.statusCode)
-                    if(httpResponse.statusCode == 200){
+                    if(httpResponse.statusCode == 401){
+                        if(action == "login"){
+                            if let jsonL = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String,String> {
+                                println(jsonL)
+                               // let r = jsonL[0]
+                                if let lErr = jsonL["error"] {
+                                    self.showMessage(lErr, vc: myVC!)
+                                    println(lErr)
+                                }
+                            }
+                        }
+                        
+                    }
+                    else if(httpResponse.statusCode == 200){
                         
                         switch action {
                         case "login", "register":
                             if let vc = myVC {
-                                
+                            
                                 var userDefaults = NSUserDefaults.standardUserDefaults()
                                 
                                 if (action == "login"){
@@ -67,11 +80,14 @@ class RequestDealer {
                             if let res = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String,String> {
                                 if let friendErr = res["error"] {
                                     println(friendErr)
+                                    self.showMessage(friendErr, vc: myVC!)
                                 }
                                 else{
                                     if let mes = res["message"] {
                                         println(mes)
                                     }
+                                    println("friend request sent")
+                                    self.showMessage("Friend request sent!", vc: myVC!)
                                 }
                             }
                             break
@@ -101,21 +117,31 @@ class RequestDealer {
                         
                         
                     }
-                    else{/*
-                        switch action {
-                        case "login", "register":
-                            if let info = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String,String>{
-                                if let err = info["error"] {
-                                    var alert = UIAlertController(title: "Alert", message: err, preferredStyle: UIAlertControllerStyle.Alert)
-                                    myVC?.presentViewController(alert, animated: true, completion: nil)
-                                }
-                            }
-                        default:
-                            //should never happen
-                            println("invalid action")
-                            break
-                        }*/
-                    }
+//                    else{
+//                        switch action {
+//                            case "login":
+//                                self.showMessage("Login failed", vc: myVC!)
+//                            default:
+//                                //should never happen
+//                                println("invalid action")
+//                            break
+//                        }
+//                        
+//                        /*
+//                        switch action {
+//                        case "login", "register":
+//                            if let info = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String,String>{
+//                                if let err = info["error"] {
+//                                    var alert = UIAlertController(title: "Alert", message: err, preferredStyle: UIAlertControllerStyle.Alert)
+//                                    myVC?.presentViewController(alert, animated: true, completion: nil)
+//                                }
+//                            }
+//                        default:
+//                            //should never happen
+//                            println("invalid action")
+//                            break
+//                        }*/
+//                    }
                 }
                 else {
                     println("failed")
@@ -124,6 +150,8 @@ class RequestDealer {
             }
         }
         task.resume()
+        
+        return 0
     }
  
     class func login(username:String, password:String, vc:UIViewController){
@@ -145,9 +173,9 @@ class RequestDealer {
         self.auth(params, path: path + "/api/user/update-password", myVC:nil, method:"PUT", action:"changePass")
     }
     
-    class func sendFriendRequest(friend:String){
+    class func sendFriendRequest(friend:String, vc: UIViewController){
         var params = ["username":friend]
-        self.auth(params, path: path + "/api/user/request-friend", myVC:nil, method:"POST", action:"sendFriendRequest")
+        self.auth(params, path: path + "/api/user/request-friend", myVC: vc, method:"POST", action:"sendFriendRequest")
     }
     class func acceptedFriendRequest(username:String, accepted:String, vc: UIViewController){
         var params = ["username":username, "accepted":accepted]
@@ -345,7 +373,6 @@ class RequestDealer {
         managedContext.save(nil)
     }
     
-    
     class func getAllInfoOnLogin(){
 //        var err: NSError?
 //        
@@ -451,6 +478,13 @@ class RequestDealer {
         }
         managedContext.save(nil)
     }
-
+    class func showMessage(message: String, vc: UIViewController) -> Void {
+        let alertController = UIAlertController(title: "Notice", message:
+            message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+        
+        vc.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     
 }

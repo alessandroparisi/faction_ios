@@ -37,7 +37,12 @@ class LoginViewController : UIViewController, UIActionSheetDelegate {
         }
         else{
             println("Nothing entered")
+            showMessage("Credentials are incomplete")
         }
+    }
+    func showMessage(message: String){
+        RequestDealer.showMessage(message, vc: self)
+
     }
     
     @IBAction func register(sender: UIButton) {
