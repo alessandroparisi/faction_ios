@@ -14,7 +14,7 @@ var sh: SessionHelper?
 
 class MainTabBarController : UITabBarController, UITabBarControllerDelegate {
     override func viewDidAppear(animated: Bool) {
-    
+//    
 //        var userDefaults = NSUserDefaults.standardUserDefaults()
 //        userDefaults.removeObjectForKey("username")
 //        KeychainManager.removeItemForKey("id")
@@ -23,6 +23,10 @@ class MainTabBarController : UITabBarController, UITabBarControllerDelegate {
 
         if let name = KeychainManager.stringForKey("id") //also check to see hes not logged out? if he is we can re log him in? I only kill the keychamanger id if he logs out from MY app, but what if he logs out elsewhere?
         {
+            
+            println(name)
+            println("returning user")
+            
             sh = SessionHelper()
             
             var friendNav = self.viewControllers?[0] as UINavigationController
@@ -31,16 +35,17 @@ class MainTabBarController : UITabBarController, UITabBarControllerDelegate {
             var friendVC = friendNav.viewControllers?[0] as FriendsViewController
             var factionVC = factionNav.viewControllers?[0] as ReceivedFactionsViewController
 
-            if newLogin {
-                //RequestDealer.getAllInfoOnLogin()
-                newLogin = false
-            }
-            else {
-                RequestDealer.updateDB(friendVC, factionVC: factionVC)
-            }
-            
-            println(name)
-            println("returning user")
+            RequestDealer.getAllInfoOnLogin(friendVC, factionVC: factionVC)
+
+//            if newLogin {
+//                RequestDealer.getAllInfoOnLogin(friendVC, factionVC: factionVC)
+//                newLogin = false
+//            }
+//            else{
+//                //RequestDealer.loadFriendData()
+//                RequestDealer.updateDB(friendVC, factionVC: factionVC)
+//            }
+
             
         }
         else{

@@ -9,13 +9,13 @@
 import Foundation
 import CoreData
 
-class Friend : NSManagedObject {
-    @NSManaged var username : String
-    
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, username: String, entityName:String) -> Friend {
-        let newItem = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: moc) as Friend
-        newItem.username = username
-        
-        return newItem
-    }
-}
+//class Friend : NSManagedObject {
+//    @NSManaged var username : String
+//    
+//    class func createInManagedObjectContext(moc: NSManagedObjectContext, username: String, entityName:String) -> Friend {
+//        let newItem = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: moc) as Friend
+//        newItem.username = username
+//        
+//        return newItem
+//    }
+//}

@@ -67,10 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var userDefaults = NSUserDefaults.standardUserDefaults()
 
         var name = "Faction"
-        if let user = userDefaults.valueForKey("username") as? String{
-            name = user
-        }
-        
+//        if let user = userDefaults.valueForKey("username") as? String{
+//            name = user
+//        }
+//        println("****!!!**!*!* name: \(name)")
+
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(name)
         var error: NSError? = nil
         

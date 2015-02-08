@@ -29,7 +29,8 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
         var friendsNav = tabBar.viewControllers?[0] as UINavigationController
         var friendsVC = friendsNav.viewControllers?[0] as FriendsViewController
 
-        RequestDealer.updateDB(friendsVC, factionVC: self)
+        //RequestDealer.updateDB(friendsVC, factionVC: self)
+        RequestDealer.getAllInfoOnLogin(friendsVC, factionVC: self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,16 +47,20 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        println("sent \(sh?.factionsReceived)")
+        println("received \(sh?.factionsSent)")
+
         switch(section){
         case 0:
-            if let s = sh?.unansweredFactions {
+            if let s = sh?.factionsReceived {
+                println(sh?.factionsReceived)
                 return s.count
             }
             else{
                 return 0
             }
         case 1:
-            if let q = sh?.answeredFactions {
+            if let q = sh?.factionsSent {
                 return q.count
             }
             else {
@@ -68,8 +73,8 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     {
         switch(section)
         {
-        case 0: return "Unanaswered Factions"
-        case 1: return "Factions"
+        case 0: return "Received Factions"
+        case 1: return "Sent Factions"
         default:return ""
         }
         
@@ -80,33 +85,37 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
         // DISPLAY DATA
         if(indexPath.section == 0){
             if let f = sh?{
-                let s = f.unansweredFactions[indexPath.row]
+                let s = f.factionsReceived[indexPath.row]
                 if let q = s.sender as String?{
-                    cell.textLabel?.text = q
+                    cell.textLabel?.text = "Faction from \(q)"
                 }
             }
         }
         else{
             if let f = sh? {
-                let s = f.answeredFactions[indexPath.row]
-                if let q = s.sender as String?{
-                    cell.textLabel?.text = q
-                }
+                let s = f.factionsSent[indexPath.row]
+                cell.textLabel?.text = "Faction sent"
             }
             cell.selectionStyle = .None
         }
         return cell
     }
-    
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return false
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("Faction at row: \(indexPath.row): has string: \(sh?.unansweredFactions[indexPath.row].story)")
-        if let t = sh?.unansweredFactions[indexPath.row].story {
-            currentText = t
+
+        if(indexPath.section == 0){
+            if let t = sh?.factionsReceived[indexPath.row].story {
+                currentText = t
+            }
+        }
+        else{
+            if let t = sh?.factionsSent[indexPath.row].story {
+                currentText = t
+            }
         }
         
     }
@@ -119,7 +128,7 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     }
     
     
-    func getFactions() -> Void {        
+    func getFactions() -> Void {
     
         
 //        let url = NSURL(string: path + "/api/update")

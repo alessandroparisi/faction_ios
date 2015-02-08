@@ -11,15 +11,15 @@ import CoreData
 
 class SessionHelper {
 //    var username: String?
-    var friends: [Friend]
-    var pendingFriends: [Friend]
-    var answeredFactions: [Faction]
-    var unansweredFactions: [Faction]
-    
+    var friends: [String]
+    var pendingFriends: [String]
+    var factionsReceived : [NonDBFaction]
+    var factionsSent : [NonDBFaction]
+
     init(){
-        self.friends = [Friend]()
-        self.pendingFriends = [Friend]()
-        self.answeredFactions = [Faction]()
-        self.unansweredFactions = [Faction]()
+        self.friends = [String]()
+        self.pendingFriends = [String]()
+        self.factionsReceived = [NonDBFaction]()
+        self.factionsSent = [NonDBFaction]()
     }
 }

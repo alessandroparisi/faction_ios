@@ -12,13 +12,13 @@ class NonDBFaction {
     var id : String
     var story : String
     var sender : String
-    var fact : String
+    var fact : Bool
 
-    init(faction: Dictionary<String,String>){
-        self.id = faction["faction_id"]!
-        self.story = faction["story"]!
-        self.sender = faction["sender"]!
-        self.fact = faction["fact"]!
+    init(faction: Dictionary<String,AnyObject>){
+        self.id = faction["id"] as String
+        self.story = faction["story"] as String
+        self.sender = faction["sender"] as String
+        self.fact = faction["fact"] as Bool
     }
     
 }

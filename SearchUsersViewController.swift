@@ -45,7 +45,6 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
         let x = self.users[indexPath.row] as String
-        print(x)
         cell.textLabel?.text = self.users[indexPath.row] as String
         return cell
     }

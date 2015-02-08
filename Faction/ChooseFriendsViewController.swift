@@ -136,12 +136,15 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     }
     
     func getFriends() -> Void {
+        if let f = sh?.friends {
+            friends = f
+        }
         // Placeholder code until they fix the fucking backend
         
-        if let session = sh? {
-            let myFriends = sh?.friends.map{$0.username}
-            self.friends = myFriends!
-        }
+//        if let session = sh? {
+//            let myFriends = sh?.friends.map{$0.username}
+//            self.friends = myFriends!
+//        }
         //println(friends)
 //        var err: NSError?
 //        

@@ -36,7 +36,9 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
         var factionNav = tabBar.viewControllers?[2] as UINavigationController
         var factionVC = factionNav.viewControllers?[0] as ReceivedFactionsViewController
 
-        RequestDealer.updateDB(self, factionVC: factionVC)
+        //RequestDealer.updateDB(self, factionVC: factionVC)
+        RequestDealer.getAllInfoOnLogin(self, factionVC: factionVC)
+
     }
     
     // MARK: - Table View
@@ -80,7 +82,7 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
             let cell = self.tableView.dequeueReusableCellWithIdentifier("PotentialFriend") as PotentialFriendCell
             if let f = sh?{
                 let s = f.pendingFriends[indexPath.row]
-                if let q = s.username as String?{
+                if let q = s as String?{
                     cell.textLabel?.text = q
                 }
             }
@@ -93,7 +95,7 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
             let cell = self.tableView.dequeueReusableCellWithIdentifier("Friend") as UITableViewCell
             if let f = sh? {
                 let s = f.friends[indexPath.row]
-                if let q = s.username as String?{
+                if let q = s as String?{
                     cell.textLabel?.text = q
                 }
             }
@@ -114,41 +116,40 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
     @IBAction func acceptFriend(sender: AnyObject) {
         if let user = sh?{
             let selectedUser = user.pendingFriends[sender.tag]
-            RequestDealer.acceptedFriendRequest(selectedUser.username, accepted: "true", vc:self)
-            removePendingFriend(selectedUser)
+            RequestDealer.acceptedFriendRequest(selectedUser, accepted: "true", vc:self)
+            //removePendingFriend(selectedUser)
         }
     }
     @IBAction func declineFriend(sender: AnyObject) {
         if let user = sh? {
             let selectedUser = user.pendingFriends[sender.tag]
-            RequestDealer.acceptedFriendRequest(selectedUser.username, accepted: "false", vc:self)
-            removePendingFriend(selectedUser)
+            RequestDealer.acceptedFriendRequest(selectedUser, accepted: "false", vc:self)
+           // removePendingFriend(selectedUser)
         }
     }
-    func removePendingFriend(user:Friend){
-        let nameToDelete =  user.username
+//    func removePendingFriend(user:String){
         
 //        println("lines: \(sh?.pendingFriends)")
         
-        let allNames = sh?.pendingFriends.map{$0.username}
-
-        if let names = allNames {
-            var i = 0
-            for name in names {
-                if nameToDelete == name {
-                    sh?.pendingFriends.removeAtIndex(i)
-                    break
-                }
-                ++i
-            }
-        }
+//        let allNames = sh?.pendingFriends
 //
-        let appDel = UIApplication.sharedApplication().delegate as AppDelegate
-        let managedContext = appDel.managedObjectContext!
-        managedContext.deleteObject(user)
-        managedContext.save(nil)
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
+//        if let names = allNames {
+//            var i = 0
+//            for name in names {
+//                if user == name {
+//                    sh?.pendingFriends.removeAtIndex(i)
+//                    break
+//                }
+//                ++i
+//            }
+//        }
+//
+//        let appDel = UIApplication.sharedApplication().delegate as AppDelegate
+//        let managedContext = appDel.managedObjectContext!
+//        managedContext.deleteObject(user)
+//        managedContext.save(nil)
+//        dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
 
-    }
+    //}
 
 }
