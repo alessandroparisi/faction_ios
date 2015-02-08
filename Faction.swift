@@ -14,4 +14,15 @@ class Faction : NSManagedObject {
     @NSManaged var story:String
     @NSManaged var sender:String
     @NSManaged var fact:String
+    
+    
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, entityName:String, id: String, story:String, sender:String, fact:String) -> Faction {
+        let newItem = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: moc) as Faction
+        newItem.id = id
+        newItem.story = story
+        newItem.sender = sender
+        newItem.fact = fact
+        
+        return newItem
+    }
 }

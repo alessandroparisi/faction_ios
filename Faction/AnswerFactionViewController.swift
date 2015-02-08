@@ -11,11 +11,11 @@ import UIKit
 
 class AnswerFactionViewController : UIViewController {
     @IBOutlet var factionText : UITextView!
-    var tableViewText = ""
+    var textViewText = ""
     
     override func viewDidLoad() {
-        factionText.text = tableViewText
+        factionText.text = textViewText
         
-        println("Table view text: \(tableViewText)")
+        println("Text view text: \(textViewText)")
     }
 }

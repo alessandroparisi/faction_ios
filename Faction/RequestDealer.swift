@@ -57,7 +57,7 @@ class RequestDealer {
                                 self.storeSessionCookie()
                                 vc.navigationController!.dismissViewControllerAnimated(true, completion: nil)
                                 println("logged in")
-                                //xself.updateDB()
+                                newLogin = true
                             }
                         case "changePass":
                             println("password changed successfully")
@@ -69,7 +69,9 @@ class RequestDealer {
                                     println(friendErr)
                                 }
                                 else{
-                                    println("friend request sent")
+                                    if let mes = res["message"] {
+                                        println(mes)
+                                    }
                                 }
                             }
                             break
@@ -86,7 +88,7 @@ class RequestDealer {
                             break
                         case "acceptFriendRequest":
                             if let vc = myVC as? FriendsViewController{
-                                self.updateDatabaseFriends(params, myVC:vc)
+                                self.updateDatabaseFriends(params)
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in vc.tableView.reloadData() })
                             }
                             println("friend accepted")
@@ -165,16 +167,7 @@ class RequestDealer {
             }
         }
     }
-    class func updateDatabaseFriends(params:Dictionary<String,String>, myVC:FriendsViewController){
-        if let val = params["accepted"] {
-            if val == "true" {
-                if let name = params["username"] {
-                    self.saveNewFriend(name, vc: myVC)
-                }
-            }
-        }
-    }
-    
+
     
     class func aleHasAShittyAuth(params: Dictionary<String,AnyObject>, path: String, myVC: UIViewController?, method:String) {
         var err: NSError?
@@ -227,7 +220,7 @@ class RequestDealer {
         task.resume()
     }
 
-    class func updateDB(vc:FriendsViewController){
+    class func updateDB(friendVC:FriendsViewController, factionVC: ReceivedFactionsViewController?){
         var err: NSError?
         
         let url = NSURL(string: path + "/api/update")
@@ -240,17 +233,27 @@ class RequestDealer {
             }
             println("-------------------------------------------")
             println("-------------------------------------------")
-            if let info = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String, Array<String>>{
+            if let info = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String, AnyObject>{
                 println(info)
-                if let pending_requests = info["pending_requests"]{
+                if let pending_requests = info["pending_requests"] as? [String]{
                     self.addPendingFriendRequests(pending_requests)
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in vc.tableView.reloadData() })
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in friendVC.tableView.reloadData() })
+                }
+                if let unansweredFactions = info["factions"] as? [Dictionary<String,String>]{
+                    var arrayOfFactions = [NonDBFaction]()
+                    unansweredFactions.map{arrayOfFactions.append(NonDBFaction(faction: $0))}
+                    self.addUnansweredFactions(arrayOfFactions)
+                    
+                    if let factTable = factionVC?.tableView {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in factTable.reloadData() })
+                    }
                 }
             }
         }
         
         task.resume()
     }
+    
     class func addPendingFriendRequests(pending_requests:[String]){
         
         
@@ -260,7 +263,7 @@ class RequestDealer {
         
         if let fr = sh?.pendingFriends {
             //println("fr: \(fr)")
-            let receivedUsernamesInDB = fr.map{$0.username as String}
+            let receivedUsernamesInDB = fr.map{$0.username}
             for req in pending_requests {
                 if find(receivedUsernamesInDB, req) == nil{
                     println("adding friend \(req) to ReceivedRequestsFriends")
@@ -275,7 +278,17 @@ class RequestDealer {
             //loadFriends(managedContext, entityName:"ReceivedRequestFriends")
         }
     }
-    class func saveNewFriend(username:String, vc:FriendsViewController){
+    class func updateDatabaseFriends(params:Dictionary<String,String>){
+        if let val = params["accepted"] {
+            if val == "true" {
+                if let name = params["username"] {
+                    self.saveNewFriend(name)
+                }
+            }
+        }
+    }
+    
+    class func saveNewFriend(username:String){
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         
@@ -312,17 +325,12 @@ class RequestDealer {
         if let results = fetchedResults {
             println("\(entityName) results: \(results)")
             if entityName == "Friends"{
-                let friends = results
                 sh?.friends = results
-                println("\(entityName) after results: \(sh?.friends )")
             }
             else{
                 sh?.pendingFriends = results
             }
-//            for r in results {
-//                managedContext.deleteObject(r)
-//            }
-//            managedContext.save(nil)
+            //self.deleteObjects(managedContext, results: results)
         }
             
         else{
@@ -330,6 +338,119 @@ class RequestDealer {
         }
         
     }
+    class func deleteObjectsFriend(managedContext: NSManagedObjectContext, results: [Friend]){
+        for r in results {
+            managedContext.deleteObject(r)
+        }
+        managedContext.save(nil)
+    }
     
+    
+    class func getAllInfoOnLogin(){
+//        var err: NSError?
+//        
+//        let url = NSURL(string: path + "/api/user/info")
+//        
+//        
+//        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+//            //println(response)
+//            if(error != nil){
+//                println(error)
+//            }
+//            if let info = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String, AnyObject>{
+//                println(info)
+//                if let pending_requests = info["pending_requests"]{
+//                    
+//                }
+//            }
+//        }
+//        
+//        task.resume()
+    }
+    class func addUnansweredFactions(unanswered_factions:[NonDBFaction]){
+        
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        loadFactionData()
+        
+        
+        if let fr = sh?.unansweredFactions {
+            //println("fr: \(fr)")
+            let unansweredFactionsInDB = fr.map{$0.id}
+            for faction in unanswered_factions {
+                if find(unansweredFactionsInDB, faction.id) == nil{
+                    println("adding faction \(faction) to UnansweredFactions")
+                    sh?.unansweredFactions.append(Faction.createInManagedObjectContext(managedContext, entityName: "UnansweredFactions", id: faction.id, story: faction.story, sender: faction.sender, fact: faction.fact))
+                    var error: NSError?
+                    
+                    if !managedContext.save(&error) {
+                        println("Could not save \(error), \(error?.userInfo)")
+                    }
+                }
+            }
+            //loadFriends(managedContext, entityName:"ReceivedRequestFriends")
+        }
+    }
+//    class func updateDatabaseFactions(params:Dictionary<String,String>){
+//        self.saveNewFaction(<#username: String#>)
+//    }
+//    class func saveNewFaction(id:String, ){
+//        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+//        let managedContext = appDelegate.managedObjectContext!
+//        
+//        if let fr = sh?.answeredFactions {
+//            //println("fr: \(fr)")
+//            let receivedUsernamesInDB = fr.map{$0.id}
+//            if find(receivedUsernamesInDB, username) == nil{
+//                println("adding friend \(username) to Friend")
+//                sh?.friends.append(Friend.createInManagedObjectContext(managedContext, username: username, entityName:"Friends"))
+//                var error: NSError?
+//                if !managedContext.save(&error) {
+//                    println("Could not save \(error), \(error?.userInfo)")
+//                }
+//                //loadFriends(managedContext, entityName:"Friends")
+//                //dispatch_async(dispatch_get_main_queue(), { () -> Void in vc.tableView.reloadData() })
+//            }
+//        }
+//    }
+
+    class func loadFactionData(){
+        let appDel = UIApplication.sharedApplication().delegate as AppDelegate
+        let managedContext = appDel.managedObjectContext!
+        
+        loadFactions(managedContext, entityName:"UnansweredFactions")
+        loadFactions(managedContext, entityName:"AnsweredFaction")
+    }
+    class func loadFactions(managedContext: NSManagedObjectContext, entityName: String){
+        let fetchRequest = NSFetchRequest(entityName: entityName)
+        
+        var error:NSError?
+        
+        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [Faction]
+        
+        if let results = fetchedResults {
+            println("\(entityName) results: \(results)")
+            if entityName == "AnsweredFaction"{
+                sh?.answeredFactions = results
+            }
+            else{
+                sh?.unansweredFactions = results
+            }
+            //self.deleteObjects(managedContext, results: results)
+        }
+            
+        else{
+            println("Could not fetch \(entityName): \(error)")
+        }
+        
+    }
+    class func deleteObjects(managedContext: NSManagedObjectContext, results: [Friend]){
+        for r in results {
+            managedContext.deleteObject(r)
+        }
+        managedContext.save(nil)
+    }
+
     
 }

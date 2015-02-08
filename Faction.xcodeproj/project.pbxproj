@@ -30,6 +30,7 @@
 		71B73FE91A845B9000C05756 /* SessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B73FE81A845B9000C05756 /* SessionHelper.swift */; };
 		71B73FF31A85BD4000C05756 /* Faction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B73FF21A85BD4000C05756 /* Faction.swift */; };
 		71E977341A8692D300364C04 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E977331A8692D300364C04 /* Friend.swift */; };
+		71E977361A86C72000364C04 /* NonDBFaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E977351A86C72000364C04 /* NonDBFaction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		71B73FE81A845B9000C05756 /* SessionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionHelper.swift; sourceTree = "<group>"; };
 		71B73FF21A85BD4000C05756 /* Faction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Faction.swift; sourceTree = SOURCE_ROOT; };
 		71E977331A8692D300364C04 /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		71E977351A86C72000364C04 /* NonDBFaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonDBFaction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +179,7 @@
 				718EB0231A6EDB0D00DAB660 /* AppDelegate.swift */,
 				710ADF0E1A8335A000664ABA /* KeyChainManager.swift */,
 				716021EF1A7FF5140061DF68 /* RequestDealer.swift */,
+				71E977351A86C72000364C04 /* NonDBFaction.swift */,
 				71B73FE81A845B9000C05756 /* SessionHelper.swift */,
 				7188B82B1A7F0689001D2F86 /* Images */,
 				7188B82A1A7F0674001D2F86 /* Find Friends */,
@@ -326,6 +329,7 @@
 				7198EE631A8145860005F7F2 /* MainTabBarController.swift in Sources */,
 				7188B7EE1A7EF0DF001D2F86 /* SendFactionViewController.swift in Sources */,
 				710ADF0F1A8335A000664ABA /* KeyChainManager.swift in Sources */,
+				71E977361A86C72000364C04 /* NonDBFaction.swift in Sources */,
 				7188B7E81A7EE54F001D2F86 /* FriendsViewController.swift in Sources */,
 				718EB0241A6EDB0D00DAB660 /* AppDelegate.swift in Sources */,
 				71B73FE71A843B3A00C05756 /* PotentialFriendCell.swift in Sources */,

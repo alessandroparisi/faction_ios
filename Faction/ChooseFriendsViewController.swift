@@ -139,7 +139,7 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
         // Placeholder code until they fix the fucking backend
         
         if let session = sh? {
-            let myFriends = sh?.friends.map{$0.valueForKey("username") as String}
+            let myFriends = sh?.friends.map{$0.username}
             self.friends = myFriends!
         }
         //println(friends)

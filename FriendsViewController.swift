@@ -31,6 +31,12 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillAppear(animated: Bool) {
+        var tabBar = self.tabBarController!
+        
+        var factionNav = tabBar.viewControllers?[2] as UINavigationController
+        var factionVC = factionNav.viewControllers?[0] as ReceivedFactionsViewController
+
+        RequestDealer.updateDB(self, factionVC: factionVC)
     }
     
     // MARK: - Table View

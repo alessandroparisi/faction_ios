@@ -12,9 +12,6 @@ import UIKit
 class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     
-    
-    var factions: [String] = ["Does Ale have a bad bitch?", "Sup homes, this true", "I aint going public"]
-    var sender: [String] = ["Bobby Morrisane", "Robert Montoya", "Elon Muskatchi"]
     var currentText: String = ""
     
     override func awakeFromNib() {
@@ -22,10 +19,17 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        getFactions()
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+    }
+    override func viewWillAppear(animated: Bool) {
+        var tabBar = self.tabBarController!
+        
+        var friendsNav = tabBar.viewControllers?[0] as UINavigationController
+        var friendsVC = friendsNav.viewControllers?[0] as FriendsViewController
+
+        RequestDealer.updateDB(friendsVC, factionVC: self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -38,18 +42,59 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     // MARK: - Table View
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return factions.count
+        switch(section){
+        case 0:
+            if let s = sh?.unansweredFactions {
+                return s.count
+            }
+            else{
+                return 0
+            }
+        case 1:
+            if let q = sh?.answeredFactions {
+                return q.count
+            }
+            else {
+                return 0
+            }
+        default: return 0
+        }
     }
-    
+    func tableView( tableView : UITableView,  titleForHeaderInSection section: Int)->String
+    {
+        switch(section)
+        {
+        case 0: return "Unanaswered Factions"
+        case 1: return "Factions"
+        default:return ""
+        }
+        
+    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
         
         // DISPLAY DATA
-        cell.textLabel?.text = self.sender[indexPath.row] as String
+        if(indexPath.section == 0){
+            if let f = sh?{
+                let s = f.unansweredFactions[indexPath.row]
+                if let q = s.sender as String?{
+                    cell.textLabel?.text = q
+                }
+            }
+        }
+        else{
+            if let f = sh? {
+                let s = f.answeredFactions[indexPath.row]
+                if let q = s.sender as String?{
+                    cell.textLabel?.text = q
+                }
+            }
+            cell.selectionStyle = .None
+        }
         return cell
     }
     
@@ -59,21 +104,22 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("Faction at row: \(indexPath.row): has string: \(factions[indexPath.row])")
-        currentText = factions[indexPath.row]
+        println("Faction at row: \(indexPath.row): has string: \(sh?.unansweredFactions[indexPath.row].story)")
+        if let t = sh?.unansweredFactions[indexPath.row].story {
+            currentText = t
+        }
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var vc = segue.destinationViewController as AnswerFactionViewController
         println("Current text \(currentText)")
-        vc.tableViewText = currentText
+        vc.textViewText = currentText
         
     }
     
     
-    func getFactions() -> Void {
-        println("a")
-        
+    func getFactions() -> Void {        
     
         
 //        let url = NSURL(string: path + "/api/update")

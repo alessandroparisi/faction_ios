@@ -22,7 +22,7 @@
         <attribute name="story" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AnsweredFaction" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="AnsweredFaction" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Friends" positionX="90" positionY="-90" width="128" height="60"/>
         <element name="ReceivedRequestFriends" positionX="367" positionY="-144" width="128" height="60"/>
         <element name="SentRequestFriends" positionX="97" positionY="32" width="128" height="60"/>
