@@ -36,6 +36,10 @@ class MainTabBarController : UITabBarController, UITabBarControllerDelegate {
             let authVC = storyboard.instantiateViewControllerWithIdentifier("authNav") as UINavigationController
             self.presentViewController(authVC, animated: false, completion: nil)
         }
+//        var userDefaults = NSUserDefaults.standardUserDefaults()
+//        userDefaults.removeObjectForKey("username")
+//        KeychainManager.removeItemForKey("id")
+        
         //RequestDealer.logout()
     }
 //    func updateAfterLogout(){

@@ -58,7 +58,7 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         println("Adding user at row \(indexPath.row) with name \(users[indexPath.row])")
-        RequestDealer.sendFriendRequest(users[indexPath.row])
+        RequestDealer.sendFriendRequest(users[indexPath.row], vc: self)
 
         //var image : UIImage = UIImage(named: "osx_design_view_messages")!
         //cell.imageView.image = image
