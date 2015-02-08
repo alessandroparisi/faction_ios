@@ -592,11 +592,17 @@ class RequestDealer {
 //    }
     
     class func showMessage(message: String, vc: UIViewController) -> Void {
-        let alertController = UIAlertController(title: "Notice", message:
-            message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+        println("Message to be sent: \(message)")
         
-        vc.presentViewController(alertController, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            let alertController = UIAlertController(title: "Notice", message:
+                message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            vc.presentViewController(alertController, animated: true, completion: nil)
+        })
+        
+        
+        
     }
     
     
