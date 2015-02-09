@@ -54,7 +54,7 @@ class MainTabBarController : UITabBarController, UITabBarControllerDelegate {
             self.presentViewController(authVC, animated: false, completion: nil)
         }
 
-        //RequestDealer.logout()
+        //RequestDealer.logout(self)
     }
 //    func updateAfterLogout(){
 //        if let name = KeychainManager.stringForKey("id") //also check to see hes not logged out? if he is we can re log him in? I only kill the keychamanger id if he logs out from MY app, but what if he logs out elsewhere?
