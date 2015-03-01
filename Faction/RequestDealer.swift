@@ -43,7 +43,12 @@ class RequestDealer {
                 //println(response)
                 if let httpResponse = response as? NSHTTPURLResponse {
                     println(httpResponse.statusCode)
-                    if (httpResponse.statusCode >= 500){
+                    if (httpResponse.statusCode == 520){
+                        if let vc = myVC as? SearchUsersViewController {
+                            self.showMessage("Friend request sent", vc: vc)
+                        }
+                    }
+                    else if (httpResponse.statusCode >= 500){
                         if let v = myVC {
                             println(error)
                             self.showMessage("error", vc: v)

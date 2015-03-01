@@ -129,8 +129,14 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func deleteFriend(sender: AnyObject) {
         if let user = sh? {
-            let selectedUser = user.friends[sender.tag]
-            RequestDealer.deleteFriend(selectedUser, vc: self)
+            let point = tableView.convertPoint(CGPointZero, fromView: sender as? UIView)
+            if let indexPath = tableView.indexPathForRowAtPoint(point) {
+                if indexPath.section == 1 {
+                    let selectedUser = user.friends[indexPath.row]
+                    RequestDealer.deleteFriend(selectedUser, vc: self)
+                }
+            }
+
         }
     }
 //    func removePendingFriend(user:String){
