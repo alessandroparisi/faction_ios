@@ -858,7 +858,6 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="factSelected:" destination="l7l-a3-5k0" eventType="touchUpInside" id="TbU-AW-ETU"/>
-                                    <action selector="fictionSelected:" destination="l7l-a3-5k0" eventType="touchUpInside" id="hoK-vH-SGN"/>
                                     <action selector="login:" destination="u79-g4-c61" eventType="touchUpInside" id="qhP-iv-GBN"/>
                                     <action selector="register:" destination="51L-J8-Y6O" eventType="touchUpInside" id="eU6-YY-Clc"/>
                                 </connections>

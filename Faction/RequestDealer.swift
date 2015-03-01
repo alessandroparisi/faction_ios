@@ -16,6 +16,8 @@ class RequestDealer {
     class func post(params: Dictionary<String,AnyObject>, path: String, myVC: UIViewController?, method:String, action:String) -> Int{
         var err: NSError?
         
+        println("************************request being made!!!********************")
+        
         let url = NSURL(string: path)
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = method
@@ -278,10 +280,10 @@ class RequestDealer {
                 if let v = friendVC {
                     self.showMessage("could not send request (bad connection)", vc: v)
                 }
-                if let v = factionVC {
+                else if let v = factionVC {
                     self.showMessage("could not send request (bad connection)", vc: v)
                 }
-                if let v = chooseVC {
+                else if let v = chooseVC {
                     self.showMessage("could not send request (bad connection)", vc: v)
                 }
             }
@@ -327,15 +329,9 @@ class RequestDealer {
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in tableView.reloadData() })
                             }
                         }
-                        //self.updateDB(friendVC, factionVC: factionVC)
                     }
                 }
                 else{
-                    println("aa")
-                    if let jsonL = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? NSDictionary {
-                        println("bb")
-                        println(jsonL)
-                    }
                 }
             }
         }
