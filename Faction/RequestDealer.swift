@@ -136,7 +136,12 @@ class RequestDealer {
                                     println("res: \(res)")
                                     if let data = res["data"] as? Dictionary<String,Bool>{
                                         if let isRight = data["isRight"]{
-                                            self.showMessage("\(isRight)", vc: myVC!)
+                                            if isRight {
+                                                self.showMessage("correct", vc: myVC!)
+                                            }
+                                            else {
+                                                self.showMessage("incorrect", vc: myVC!)
+                                            }
                                         }
                                     }
                                 }
