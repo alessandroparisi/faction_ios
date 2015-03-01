@@ -124,11 +124,9 @@ class RequestDealer {
                             println("friend accepted")
                             break
                         case "sendFaction":
-//                            if let vc = myVC as? ChooseFriendViewController {
-//                                if let nav = vc.navigationController {
-//                                    nav.popViewControllerAnimated(true)
-//                                }
-//                            }
+                            if let vc = myVC as? ChooseFriendViewController {
+                                self.showMessage("faction sent!", vc: vc)
+                            }
                             break
                         case "respondFaction":
                             if let vc = myVC as? AnswerFactionViewController {
