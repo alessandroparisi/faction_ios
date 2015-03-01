@@ -15,7 +15,7 @@ class NonDBFaction {
     var fact : Bool
 
     init(faction: Dictionary<String,AnyObject>){
-        self.id = faction["id"] as String
+        self.id = faction["factionId"] as String
         self.story = faction["story"] as String
         self.sender = faction["sender"] as String
         self.fact = faction["fact"] as Bool

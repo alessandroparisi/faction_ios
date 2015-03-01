@@ -52,9 +52,6 @@ class LoginViewController : UIViewController, UIActionSheetDelegate {
     func authUser(username:String, password:String) {
         RequestDealer.login(username, password: password, vc: self)
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        
-    }
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         self.view.endEditing(true)
     }

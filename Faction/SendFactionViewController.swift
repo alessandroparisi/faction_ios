@@ -24,19 +24,12 @@ class SendFactionViewController: UIViewController, UITextViewDelegate {
 
     
     override func viewWillAppear(animated: Bool) {
-        faction = ""
         textView.text = ""
     }
     
     @IBOutlet weak var True: UIButton!
     @IBOutlet weak var False: UIButton!
     @IBOutlet var textView: UITextView!
-    
-    var faction = ""
-    
-    @IBAction func sendFactionFalse(sender: AnyObject) {
-        
-    }
     
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -45,19 +38,19 @@ class SendFactionViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func True(sender: UIButton) {
-        println("Setting faction to true")
-        faction = "true"
+        self.performSegueWithIdentifier("pick_friends", sender: true)
     }
     
     @IBAction func False(sender: UIButton) {
-        println("Setting faction to false")
-        faction = "false"
+        self.performSegueWithIdentifier("pick_friends", sender: false)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var vc = segue.destinationViewController as ChooseFriendViewController
         vc.factionText = textView.text
-        vc.faction = faction
+        if let s = sender as? Bool {
+            vc.faction = s
+        }
         
     }
     

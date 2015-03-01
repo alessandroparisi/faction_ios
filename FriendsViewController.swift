@@ -13,6 +13,7 @@ import CoreData
 class FriendsViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
 
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -116,15 +117,20 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
     @IBAction func acceptFriend(sender: AnyObject) {
         if let user = sh?{
             let selectedUser = user.pendingFriends[sender.tag]
-            RequestDealer.acceptedFriendRequest(selectedUser, accepted: "true", vc:self)
-            //removePendingFriend(selectedUser)
+            RequestDealer.acceptedFriendRequest(selectedUser, accepted: true, vc:self)
         }
     }
     @IBAction func declineFriend(sender: AnyObject) {
         if let user = sh? {
             let selectedUser = user.pendingFriends[sender.tag]
-            RequestDealer.acceptedFriendRequest(selectedUser, accepted: "false", vc:self)
-           // removePendingFriend(selectedUser)
+            RequestDealer.acceptedFriendRequest(selectedUser, accepted: false, vc:self)
+        }
+    }
+    
+    @IBAction func deleteFriend(sender: AnyObject) {
+        if let user = sh? {
+            let selectedUser = user.friends[sender.tag]
+            RequestDealer.deleteFriend(selectedUser, vc: self)
         }
     }
 //    func removePendingFriend(user:String){

@@ -19,7 +19,7 @@ class SettingsViewController : UIViewController{
         println("attemption change password")
         if(newPass.text != "" && currentPass.text != ""){
             if(newPass.text == confirmNewPass.text){
-                RequestDealer.changePassword(currentPass.text, newPass: newPass.text)
+                RequestDealer.changePassword(currentPass.text, newPass: newPass.text, vc:self)
             }
             else{
                 println("passwords do not match")

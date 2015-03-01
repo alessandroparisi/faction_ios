@@ -17,7 +17,7 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
     
     var selectedFriends = [Int: String]()
     var factionText : String?
-    var faction : String = ""
+    var faction = false
     
   
     @IBOutlet weak var sendFaction: UIButton!
@@ -145,31 +145,6 @@ class ChooseFriendViewController : UIViewController, UITableViewDelegate, UITabl
         println(factionText!)
         println(faction)
         
-        let params = ["to":x,"faction":factionText!,"fact":faction] as Dictionary<String, AnyObject>
-        RequestDealer.aleHasAShittyAuth(params, path: path + "/api/factions/send", myVC: self, method:"POST")
-        self.navigationController!.popViewControllerAnimated(true)
+        RequestDealer.sendFaction(x, factionText: factionText!, answer: faction, vc:self)
     }
-    
-    func getFriends() -> Void {
-        // Placeholder code until they fix the fucking backend
-        
-//        if let session = sh? {
-//            let myFriends = sh?.friends.map{$0.username}
-//            self.friends = myFriends!
-//        }
-        //println(friends)
-//        var err: NSError?
-//        
-//        let url = NSURL(string: "https://faction.notscott.me/api/user/search")
-//        
-//        
-//        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-//            self.friends =  NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as Array<String>
-//            println(self.friends)
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in self.tableView.reloadData() })
-//        }
-//        
-//        task.resume()
-    }
-
 }

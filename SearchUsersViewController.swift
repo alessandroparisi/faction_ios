@@ -11,8 +11,9 @@ import UIKit
 
 class SearchUsersViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
     
-    var users: Array<String> = []
+    var users: Array<Dictionary<String,String>> = []
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,7 +23,7 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
         tableView.reloadData()
     }
     override func viewWillAppear(animated: Bool) {
-        getUsers()
+        getUsers("")
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -46,8 +47,9 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
-        let x = self.users[indexPath.row] as String
-        cell.textLabel?.text = self.users[indexPath.row] as String
+        let x = self.users[indexPath.row]
+        cell.textLabel?.text = x["username"]
+        cell.detailTextLabel?.text = x["email"]
         return cell
     }
     
@@ -59,34 +61,36 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         println("Adding user at row \(indexPath.row) with name \(users[indexPath.row])")
-        RequestDealer.sendFriendRequest(users[indexPath.row], vc: self)
+        let user = users[indexPath.row]
+        RequestDealer.sendFriendRequest(user["username"]!, vc: self)
 
         //var image : UIImage = UIImage(named: "osx_design_view_messages")!
         //cell.imageView.image = image
         
     }
-    func getUsers() -> Void {
+    func getUsers(param:String) -> Void {
         self.users = []
         var err: NSError?
         
-        let url = NSURL(string: path + "/api/user/search")
+        let url = NSURL(string: path + "/api/user/search?search=" + param)
      
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
             //println(response)
-            if let u = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Array<String> {
-                var allUsers = u
-                var def = NSUserDefaults.standardUserDefaults()
-                if let defaultName:AnyObject = def.valueForKey("username"){
-                    for user in allUsers {
-                        if(user != defaultName as String){
-                            self.users.append(user)
+            if let u = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as? Dictionary<String,AnyObject> {
+                if let allUsers = u["data"] as? [Dictionary<String, String>]{
+                    var def = NSUserDefaults.standardUserDefaults()
+                    if let defaultName:AnyObject = def.valueForKey("username"){
+                        for user in allUsers {
+                            if(user["username"] != (defaultName as String)){
+                                self.users.append(user)
+                            }
                         }
                     }
-                }
-                else{
-                    println("else")
-                    self.users = allUsers
+                    else{
+                        println("else")
+                        self.users = allUsers
+                    }
                 }
             }
             println(self.users)
@@ -97,6 +101,9 @@ class SearchUsersViewController : UIViewController, UITableViewDelegate, UITable
         task.resume()
 
         
+    }
+    @IBAction func doSearch(sender: AnyObject) {
+        getUsers(searchBar!.text)
     }
     
 }

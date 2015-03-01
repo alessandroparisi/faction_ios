@@ -40,7 +40,12 @@ class RegisterViewController : UIViewController, UIActionSheetDelegate {
     @IBAction func register(sender: UIButton) {
         if(usernameTextField.text != "" && passwordTextField.text != "" && emailTextField.text != ""){
             if(passwordTextField.text == confirmPasswordTextField.text && countElements(passwordTextField.text!) >= 8){
-                self.registerUser(usernameTextField.text, password: passwordTextField.text, email:emailTextField.text)
+                if(isValidEmail(emailTextField.text)){
+                    self.registerUser(usernameTextField.text, password: passwordTextField.text, email:emailTextField.text)
+                }
+                else{
+                    showMessage("Invlaid Email")
+                }
             }
             else if(countElements(passwordTextField.text!) < 8){
                 println("Password entered must be at least 8 characters long")
@@ -57,18 +62,19 @@ class RegisterViewController : UIViewController, UIActionSheetDelegate {
         println("registering + logging in...")
         RequestDealer.register(username, password: password, email: email, vc: self)
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-    }
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         self.view.endEditing(true)
     }
-    
-    
     func showMessage(message: String) -> Void {
-        
         RequestDealer.showMessage(message, vc: self)
-        
     }
-    
+    func isValidEmail(testStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        
+        if let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx) {
+            return emailTest.evaluateWithObject(testStr)
+        }
+        return false
+    }
     
 }

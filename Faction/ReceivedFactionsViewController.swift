@@ -11,6 +11,13 @@ import UIKit
 
 class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
+    
+    var fil_unans = [NonDBFaction]()
+    var fil_rec = [NonDBFaction]()
+    var fil_sent = [NonDBFaction]()
+    var filtered = false
+    var toAnswer = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,14 +29,25 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
         super.viewWillDisappear(animated)
     }
     override func viewWillAppear(animated: Bool) {
+        filtered = false
         var tabBar = self.tabBarController!
         
         var friendsNav = tabBar.viewControllers?[0] as UINavigationController
         var friendsVC = friendsNav.viewControllers?[0] as FriendsViewController
 
-        
-        //RequestDealer.updateDB(friendsVC, factionVC: self)
         RequestDealer.getAllInfoOnLogin(friendsVC, factionVC: self, chooseVC: nil)
+        
+//        var f1 = ["factionId":"1", "story":"thestoryy", "sender":"ale", "fact":true]
+//        var f2 = ["factionId":"2", "story":"mystory", "sender":"ale", "fact":true]
+//        var f3 = ["factionId":"3", "story":"helloman", "sender":"danny", "fact":true]
+//        var f4 = ["factionId":"4", "story":"qqhello", "sender":"v2", "fact":false]
+//        var f5 = ["factionId":"5", "story":"thestoimagineryy", "sender":"ale", "fact":true]
+//        var f6 = ["factionId":"6", "story":"wwowoow", "sender":"leo", "fact":false]
+//        
+//        sh?.factionsReceived = [NonDBFaction(faction: f1), NonDBFaction(faction: f2)]
+//        sh?.unansweredFactions = [NonDBFaction(faction: f5), NonDBFaction(faction: f6)]
+//        sh?.factionsSent = [NonDBFaction(faction: f3), NonDBFaction(faction: f4)]
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -42,25 +60,32 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     // MARK: - Table View
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println("sent \(sh?.factionsReceived)")
-        println("received \(sh?.factionsSent)")
 
         switch(section){
         case 0:
-            if let s = sh?.factionsReceived {
-                println(sh?.factionsReceived)
-                return s.count
+            if let q = sh?.unansweredFactions {
+                if filtered {return fil_unans.count}
+                else { return q.count}
             }
             else{
                 return 0
             }
         case 1:
+            if let q = sh?.factionsReceived {
+                if filtered { return fil_rec.count}
+                else { return q.count}
+            }
+            else {
+                return 0
+            }
+        case 2:
             if let q = sh?.factionsSent {
-                return q.count
+                if filtered { return fil_sent.count}
+                else { return q.count}
             }
             else {
                 return 0
@@ -72,8 +97,9 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     {
         switch(section)
         {
-        case 0: return "Received Factions"
-        case 1: return "Sent Factions"
+        case 0: return "Unanswered Factions"
+        case 1: return "Received Factions"
+        case 2: return "Sent Factions"
         default:return ""
         }
         
@@ -84,16 +110,46 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
         // DISPLAY DATA
         if(indexPath.section == 0){
             if let f = sh?{
-                let s = f.factionsReceived[indexPath.row]
-                if let q = s.sender as String?{
-                    cell.textLabel?.text = "Faction from \(q)"
+                if filtered {
+                    let s = fil_unans[indexPath.row]
+                    if let q = s.sender as String?{
+                        cell.textLabel?.text = "Faction from \(q)"
+                    }
+                }
+                else{
+                    let s = f.unansweredFactions[indexPath.row]
+                    if let q = s.sender as String?{
+                        cell.textLabel?.text = "Faction from \(q)"
+                    }
+                }
+            }
+        }
+        else if(indexPath.section == 1){
+            if let f = sh?{
+                if filtered {
+                    let s = fil_rec[indexPath.row]
+                    if let q = s.sender as String?{
+                        cell.textLabel?.text = "Faction from \(q)"
+                    }
+                }
+                else {
+                    let s = f.factionsReceived[indexPath.row]
+                    if let q = s.sender as String?{
+                        cell.textLabel?.text = "Faction from \(q)"
+                    }
                 }
             }
         }
         else{
             if let f = sh? {
-                let s = f.factionsSent[indexPath.row]
-                cell.textLabel?.text = "Faction sent"
+                if filtered {
+                    let s = fil_sent[indexPath.row]
+                    cell.textLabel?.text = "Faction sent"
+                }
+                else {
+                    let s = f.factionsSent[indexPath.row]
+                    cell.textLabel?.text = "Faction sent"
+                }
             }
             cell.selectionStyle = .None
         }
@@ -105,48 +161,93 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-        println("getting text")
-        if(indexPath.section == 0){
-            if let t = sh?.factionsReceived[indexPath.row].story {
-                self.performSegueWithIdentifier("view_faction", sender: t)
-            }
-        }
-        else{
-            if let t = sh?.factionsSent[indexPath.row].story {
-                self.performSegueWithIdentifier("view_faction", sender: t)
-            }
-        }
         
+        toAnswer = false
+        if(indexPath.section == 0){
+            if let t = sh?.unansweredFactions[indexPath.row] {
+                self.performSegueWithIdentifier("view_faction", sender: t)
+            }
+        }
+        else if(indexPath.section == 1){
+            if let t = sh?.factionsReceived[indexPath.row]{
+                toAnswer = true
+                self.performSegueWithIdentifier("view_faction", sender: t)
+            }
+        }
+        else if (indexPath.section == 2){
+            if let t = sh?.factionsSent[indexPath.row] {
+                toAnswer = true
+                self.performSegueWithIdentifier("view_faction", sender: t)
+            }
+        }
     }
-//    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var vc = segue.destinationViewController as AnswerFactionViewController
-        if let t = sender as? String {
-            println("setting text \(t)")
-            vc.textViewText = t
+        if let t = sender as? NonDBFaction {
+            vc.faction = t
+            vc.answered = toAnswer
         }
     }
-//
     
-    func getFactions() -> Void {
-    
-        
-//        let url = NSURL(string: path + "/api/update")
-//        let session = NSURLSession.sharedSession()
-//        let dataTask = session.dataTaskWithURL(url!, completionHandler: { (data: NSData!, response:NSURLResponse!,
-//            error: NSError!) -> Void in
-//            println("ok")
-//            println(response)
-//            println(error)
-//            println(data)
-//            var err: NSError?
-//            let jsonDict = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &err) as NSDictionary
-//            println(jsonDict)
-//
-//            self.factions = jsonDict["factions"] as Array
-//            println(self.factions)
-//        })
+    @IBAction func deleteFaction(sender: AnyObject) {
+        if let user = sh? {
+            var selectedFactionID = ""
+            let point = tableView.convertPoint(CGPointZero, fromView: sender as? UIView)
+            if let indexPath = tableView.indexPathForRowAtPoint(point) {
+                switch (indexPath.section)
+                {
+                case 0:
+                    if filtered {
+                        selectedFactionID = fil_unans[indexPath.row].id
+                    }
+                    else{
+                        selectedFactionID = user.unansweredFactions[indexPath.row].id
+                    }
+                    break
+                case 1:
+                    if filtered {
+                        selectedFactionID = fil_rec[indexPath.row].id
+                    }
+                    else {
+                        selectedFactionID = user.factionsReceived[indexPath.row].id
+                    }
+                    break
+                case 2:
+                    if filtered {
+                        selectedFactionID = fil_sent[indexPath.row].id
+                    }
+                    else{
+                        selectedFactionID = user.factionsSent[indexPath.row].id
+                   }
+                    break
+                default: println("error")
+                }
+            }
+           RequestDealer.deleteFaction(selectedFactionID, vc: self)
+        }
     }
-    
+    @IBAction func filterFactions(sender: AnyObject) {
+        println("text \(searchBar!.text)")
+        if searchBar!.text != "" {
+            println("in")
+            filtered = true
+            var a = sh?.unansweredFactions.filter( { (f: NonDBFaction) -> Bool in
+                return ((f.story.rangeOfString(self.searchBar!.text) != nil) || (f.sender.rangeOfString(self.searchBar!.text) != nil))
+            })
+            fil_unans = a!
+            var b = sh?.factionsReceived.filter( { (f: NonDBFaction) -> Bool in
+                return ((f.story.rangeOfString(self.searchBar!.text) != nil) || (f.sender.rangeOfString(self.searchBar!.text) != nil))
+            })
+            fil_rec = b!
+            var c = sh?.factionsSent.filter( { (f: NonDBFaction) -> Bool in
+                return ((f.story.rangeOfString(self.searchBar!.text) != nil) || (f.sender.rangeOfString(self.searchBar!.text) != nil))
+            })
+            fil_sent = c!
+        }
+        else{
+            filtered = false
+        }
+        self.tableView.reloadData()
+    }
+
 }

@@ -15,11 +15,15 @@ class SessionHelper {
     var pendingFriends: [String]
     var factionsReceived : [NonDBFaction]
     var factionsSent : [NonDBFaction]
-
+    var unansweredFactions : [NonDBFaction]
+    var factionResponses: [FactionResponse]
+    
     init(){
         self.friends = [String]()
         self.pendingFriends = [String]()
         self.factionsReceived = [NonDBFaction]()
         self.factionsSent = [NonDBFaction]()
+        self.unansweredFactions = [NonDBFaction]()
+        self.factionResponses = [FactionResponse]()
     }
 }

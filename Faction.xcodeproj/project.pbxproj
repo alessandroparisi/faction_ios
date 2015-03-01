@@ -11,6 +11,7 @@
 		710ADF121A84046E00664ABA /* Faction.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 710ADF101A84046E00664ABA /* Faction.xcdatamodeld */; };
 		714BD17F1A87D2BB00A1B975 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 714BD17E1A87D2BB00A1B975 /* Main.storyboard */; };
 		716021F01A7FF5140061DF68 /* RequestDealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716021EF1A7FF5140061DF68 /* RequestDealer.swift */; };
+		716371C41AA22E6E008EB86D /* FactionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716371C31AA22E6E008EB86D /* FactionResponse.swift */; };
 		7188B7E01A7EB8F0001D2F86 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 7188B7DF1A7EB8F0001D2F86 /* background.png */; };
 		7188B7E21A7EB95A001D2F86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7E11A7EB95A001D2F86 /* LoginViewController.swift */; };
 		7188B7E41A7EB964001D2F86 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7188B7E31A7EB964001D2F86 /* RegisterViewController.swift */; };
@@ -48,6 +49,7 @@
 		710ADF111A84046E00664ABA /* Faction.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Faction.xcdatamodel; sourceTree = "<group>"; };
 		714BD17E1A87D2BB00A1B975 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		716021EF1A7FF5140061DF68 /* RequestDealer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDealer.swift; sourceTree = "<group>"; };
+		716371C31AA22E6E008EB86D /* FactionResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactionResponse.swift; sourceTree = "<group>"; };
 		7188B7DF1A7EB8F0001D2F86 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		7188B7E11A7EB95A001D2F86 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7188B7E31A7EB964001D2F86 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				718EB0231A6EDB0D00DAB660 /* AppDelegate.swift */,
 				710ADF0E1A8335A000664ABA /* KeyChainManager.swift */,
 				716021EF1A7FF5140061DF68 /* RequestDealer.swift */,
+				716371C31AA22E6E008EB86D /* FactionResponse.swift */,
 				71E977351A86C72000364C04 /* NonDBFaction.swift */,
 				71B73FE81A845B9000C05756 /* SessionHelper.swift */,
 				7188B82B1A7F0689001D2F86 /* Images */,
@@ -334,6 +337,7 @@
 				718EB0241A6EDB0D00DAB660 /* AppDelegate.swift in Sources */,
 				71B73FE71A843B3A00C05756 /* PotentialFriendCell.swift in Sources */,
 				7188B7E41A7EB964001D2F86 /* RegisterViewController.swift in Sources */,
+				716371C41AA22E6E008EB86D /* FactionResponse.swift in Sources */,
 				71B73FF31A85BD4000C05756 /* Faction.swift in Sources */,
 				7188B7EC1A7EEA8A001D2F86 /* SearchUsersViewController.swift in Sources */,
 				7188B7F01A7EFB0C001D2F86 /* SettingsViewController.swift in Sources */,
