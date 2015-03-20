@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 var newLogin = false
 var sh: SessionHelper?
+var path = "https://faction.notscott.me"
 
 class MainTabBarController : UITabBarController, UITabBarControllerDelegate {
     override func viewDidAppear(animated: Bool) {
@@ -20,7 +21,7 @@ class MainTabBarController : UITabBarController, UITabBarControllerDelegate {
 //        KeychainManager.removeItemForKey("id")
 //        RequestDealer.logout(self)
         
-        if let name = KeychainManager.stringForKey("id") //also check to see hes not logged out? if he is we can re log him in? I only kill the keychamanger id if he logs out from MY app, but what if he logs out elsewhere?
+        if let name = KeychainManager.stringForKey("id") //also check to see hes not logged out? if he is we can re log him in? I only kill the keychamanger id if he logs out from my app, but what if he logs out elsewhere?
         {
             
             println(name)
@@ -34,7 +35,7 @@ class MainTabBarController : UITabBarController, UITabBarControllerDelegate {
             var friendVC = friendNav.viewControllers?[0] as FriendsViewController
             var factionVC = factionNav.viewControllers?[0] as ReceivedFactionsViewController
 
-            RequestDealer.getAllInfoOnLogin(friendVC, factionVC: factionVC, chooseVC:nil)
+            //RequestDealer.getAllInfoOnLogin(friendVC, factionVC: factionVC, chooseVC:nil)
 
         }
         else{

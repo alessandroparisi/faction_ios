@@ -12,7 +12,6 @@ import CoreData
 
 class FriendsViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
-
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,26 +37,33 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
         var factionVC = factionNav.viewControllers?[0] as ReceivedFactionsViewController
 
         //RequestDealer.updateDB(self, factionVC: factionVC)
-        RequestDealer.getAllInfoOnLogin(self, factionVC: factionVC, chooseVC: nil)
+        RequestDealer.getAllInfoOnLogin(self, factionVC: factionVC, chooseVC: nil, com:nil, g:nil)
 
     }
     
     // MARK: - Table View
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(section){
         case 0:
-            if let s = sh?.pendingFriends {
+            if let s = sh?.topThree {
                 return s.count
             }
             else{
                 return 0
             }
         case 1:
+            if let s = sh?.pendingFriends {
+                return s.count
+            }
+            else{
+                return 0
+            }
+        case 2:
             if let q = sh?.friends {
                 return q.count
             }
@@ -71,8 +77,9 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
     {
         switch(section)
         {
-        case 0: return "Pending Requests"
-        case 1: return "Friends"
+        case 0: return "Top Friends"
+        case 1: return "Pending Requests"
+        case 2: return "Friends"
         default:return ""
         }
         
@@ -80,6 +87,17 @@ class FriendsViewController : UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if(indexPath.section == 0){
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("TopThree") as UITableViewCell
+            if let f = sh?{
+                let s = f.topThree[indexPath.row]
+                if let q = s as String?{
+                    cell.textLabel?.text = q
+                }
+            }
+            cell.selectionStyle = .None
+            return cell
+        }
+        else if(indexPath.section == 1){
             let cell = self.tableView.dequeueReusableCellWithIdentifier("PotentialFriend") as PotentialFriendCell
             if let f = sh?{
                 let s = f.pendingFriends[indexPath.row]

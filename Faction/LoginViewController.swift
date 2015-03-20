@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-var path = "https://faction.notscott.me"
 
 class LoginViewController : UIViewController, UIActionSheetDelegate {
     

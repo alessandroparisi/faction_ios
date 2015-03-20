@@ -35,7 +35,7 @@ class ReceivedFactionsViewController : UIViewController, UITableViewDelegate, UI
         var friendsNav = tabBar.viewControllers?[0] as UINavigationController
         var friendsVC = friendsNav.viewControllers?[0] as FriendsViewController
 
-        RequestDealer.getAllInfoOnLogin(friendsVC, factionVC: self, chooseVC: nil)
+        RequestDealer.getAllInfoOnLogin(friendsVC, factionVC: self, chooseVC: nil, com:nil, g:nil)
         
 //        var f1 = ["factionId":"1", "story":"thestoryy", "sender":"ale", "fact":true]
 //        var f2 = ["factionId":"2", "story":"mystory", "sender":"ale", "fact":true]

@@ -16,15 +16,16 @@ class AnswerFactionViewController : UIViewController {
     var faction : NonDBFaction?
     var answered = false
     
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var viewCommentsButton: UIButton!
     @IBOutlet var resultText: UILabel!
     override func viewDidLoad() {
         
-        factButton.hidden = false
-        factButton.hidden = false
         
-        if let f = faction {
-            factionText.text = f.story
-        }
+        factButton.hidden = false
+        factButton.hidden = false
+        viewCommentsButton.hidden = true
+        
         if answered {
             factButton.hidden = true
             fictionButton.hidden = true
@@ -38,6 +39,18 @@ class AnswerFactionViewController : UIViewController {
                 }
             }
         }
+        if let f = faction {
+            factionText.text = f.story
+            
+            if f.comments_enabled && answered{
+                println(answered)
+                println(f.comments_enabled)
+                viewCommentsButton.hidden = false
+            }
+            if let im = f.image_data {
+                imageView.image = UIImage(data: im)!
+            }
+        }
     }
     @IBAction func fictionSelected(sender: AnyObject) {
         if let f = faction? {
@@ -47,6 +60,15 @@ class AnswerFactionViewController : UIViewController {
     @IBAction func factSelected(sender: AnyObject) {
         if let f = faction? {
             RequestDealer.respondFaction(f.id, response: true, vc: self)
+        }
+    }
+    @IBAction func viewComments(sender: AnyObject) {
+        self.performSegueWithIdentifier("view_comments", sender: faction)
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var vc = segue.destinationViewController as CommentsViewController
+        if let t = sender as? NonDBFaction {
+            vc.faction = t
         }
     }
 }
