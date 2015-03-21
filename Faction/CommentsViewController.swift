@@ -69,9 +69,18 @@ class CommentsViewController : UIViewController, UITableViewDelegate, UITableVie
     @IBAction func sendComment(sender: AnyObject) {
         self.view.endEditing(true)
         if let q = faction {
-            let d = ["commentId":"123123123", "commenter": "me", "content": commentBar.text]
-            q.comments.append(Comment(dic: d))
-            RequestDealer.commentFaction(q.id, content: commentBar.text!, vc: self)
+            var userDefaults = NSUserDefaults.standardUserDefaults()
+    
+            if let user = userDefaults.valueForKey("username") as? String{
+                let d = ["commentId":"123123123", "commenter": user, "content": commentBar.text]
+                q.comments.append(Comment(dic: d))
+                RequestDealer.commentFaction(q.id, content: commentBar.text!, vc: self)
+            }
+            else {
+                let d = ["commentId":"123123123", "commenter": "me", "content": commentBar.text]
+                q.comments.append(Comment(dic: d))
+                RequestDealer.commentFaction(q.id, content: commentBar.text!, vc: self)
+            }
         }
     }
 }
